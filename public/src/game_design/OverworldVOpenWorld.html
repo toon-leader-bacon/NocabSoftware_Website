@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+	<link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+	<link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav> <!-- End of navbar -->
+
+    <!-- Game design has different fonts -->
+    <div class="game-design">
+      <h3>Overworld vs Open World</h3>
+      <p>An important thing to consider early on in the design process
+        of a new game is the setting, or the world that the game takes place in.
+        Traditional storytelling mediums, like books or movies, only contain
+        the character’s immediate surrounds, while more mundane areas are left
+        out like transitions between scenes. However, games can allow for a
+        player to explore for themselves and sometimes emphasise parts of the
+        world that traditional mediums leave out. I want to <mark>consider these
+          two styles of setting development: On the one hand the setting is
+          striped down to exist only where there is important content, and on the
+          other hand the story is embedded into a larger world.</mark> With that in mind, let’s set some definitions.
+      </p><br><br>
+      <p><mark>Overworld: A type of setting that contains pockets of interesting content that the player is teleported
+          to.</mark>
+        The transitions between scenes is sudden so as to trim out unimportant
+        areas or down time. The term overworld is sometimes taken literally and
+        provides the player with a map of points of interest that a player can
+        warp to, and other times a “hubworld” is used where the player has
+        access to all the other levels of the game. Some example overworld games
+        include Ratchet and Clank, Mairo (both older 2D and newer 3D games),
+        and first person shooter games like Halo or Doom. In general, games that
+        have discrete levels often times are overworld style games.</p><br>
+      <p><mark>Open World: A type of setting that is continuous and has areas of content embedded into a larger world
+          map.</mark>
+        Often times a player can walk continuously from one end of the world to
+        the other. Usually an open world doesn't “rail-road” the player and
+        provides them with meaningful crossroads. Some examples of open world
+        games include Runescape, Legend of Zelda Breath of the Wild or Hollow
+        Knight.</p><br><br>
+      <p>Why would a designer pick one of these settings over the other? What are the strengths and weaknesses of each?
+      </p><br>
+      <p>First consider the <mark>Overworld</mark> style of games.</p>
+      <p>By definition, an overworld has (mostly) isolated pockets of
+        content. These pockets are where all the stuff happens. Using Ratchet
+        and Clank as an example, the player flies to a new planet and finds a
+        self contained experience complete with enemies, weapons, buildings,
+        platforms, boxes and loot. Generating engaging content between levels is
+        a lot of effort, and may not contribute much to the game. So cutting it
+        out saves development time and resources. This allows the designer to
+        focus on the “fun” parts of the game and <mark>condenses game content into a series of compelling levels.</mark>
+      </p>
+      <p>Additionally, who wants to watch their character walk along a
+        boring old road anyways? Overworld settings take the player straight to
+        the action and can keep the down-time low. So if your game has pushes
+        fast paced action (like Doom) or focuses on some other concentrated
+        affordance (like puzzle games), then an overworld style of game can help
+        ensure that the content is not diluted. </p>
+      <p>A neutral aspect of overworld style games is that player
+        mobility often times becomes trivial. Allowing a player to teleport to
+        any previous level or section of the game is not good or bad, but simply
+        something to keep in mind while designing. What incentive is there for a
+        player to progress through the game if they can just go back to the
+        first level and dominate?</p>
+      <p>One possible negative of overworld style games is that the
+        sudden teleportation into a new area takes the player out of their
+        suspension of disbelief. Some games however actually encourage this
+        meta-game behavior and actively pull the player out of the story. In the
+        3D Mario games each area has a certain number of stars to collect, so
+        the player must replay the same area to try and get more stars. It
+        doesn't entirely make sense in the story why the player is going back to
+        the same place, which breaks immersion. But here, <mark>the game is the focus, not the story.</mark>
+        An overworld map is just that: a map. It lends itself to meta-game
+        planning, or thinking about the game like a game, not an unfolding
+        story.</p><br><br>
+      <p>Now consider <mark>Open World</mark> games.</p>
+      <p>Open world games, by definition, need content to fill in the
+        space between points of interest. So while overworld games focus on
+        concentrating the game in pockets, open world games often focus on this
+        inbetween space. Games like Pokemon or other RPGs are a great example
+        where the travel between gyms (or points of interest) is filled with new
+        monsters, environments, characters, side quests, etc. This extra game
+        content takes development time to produce but if designed correctly the
+        ‘travel between story points’ itself may become the gameplay.</p>
+      <p>Open world games tend to emphasize exploration, experimentation and individual choice. This <mark>enables the
+          player to project themselves into the character</mark>
+        they control and effectively become the character. A lot of modern open
+        world games only allow the player to control a single character which
+        also reinforces the idea that the player themselves is an entity in the
+        game world, as opposed to the idea that the player is watching a story
+        about other characters.</p>
+      <p>Open world settings tend to <mark>take the storytelling responsibility away from the designer and hand it to
+          the player</mark>
+        to allow them to make their own story. Because open world games have
+        “meaningful crossroads”, the designer can’t know what the player will
+        do. For example in Skyrim, will the player become a wizard, archer,
+        swordsmen? Will they follow the main quest to save the world, or follow a
+        side quest and become royalty of a small village? Open world games
+        naturally lend themselves to <a
+          href="https://nocabsoftware.com/src/game_design/EmergentStorytelling.html">emergent storytelling</a>.
+        In short, open world games enable players to make subtle, spur of the
+        moment decisions that can have impacts on what the player is doing for
+        the next 10 minutes, or next 10 hours of the game.</p>
+      <p>On the negative side, open world games sometimes require a lot
+        of in game travel time. Open world games live and die by their ability
+        to design interesting roads. Running through old content, backtracking,
+        or the dreaded “fetch quests” can quickly get boring. So <mark>designing roads or landscapes that are compelling
+          for a player is a top priority, but not an easy task.</mark></p><br>
+      <br>
+      <br>
+      <p>These are the general trends of overworld and open world settings. <mark>It’s possible to mix the two.</mark>
+        Many traditional turn based RPG games like Chrono Trigger or Final
+        Fantasy use a mix of overworld maps with embedded sub-regions of open
+        world settings. Pokemon is an open world game that is very linear in
+        story and map progression. Finding the right mix of open and overworld
+        for your game is a challenge and requires lots of play testing,
+        planning, and thought. It all depends on what your trying to achieve. <mark>In
+          summary, overworld maps have pockets of well made content while open
+          world maps enable for player agency and emergent storytelling.</mark>
+        Once you figure out what your game is about, then you can use the right
+        tool to achieve it. One of those tools is the map and setting of the
+        game.</p>
+
+      <br class="large">
+      <br class="large">
+    </div> <!-- End game design text type -->
+  </div> <!-- End of container-narrow  All stuff should be in this div-->
+
+</body>
+
+</html>

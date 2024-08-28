@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <hr class="line">
+    <h3><b>For those who've been here before:</b></h3>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">using</span><span class="pln"> </span><span class="typ">LightJson</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+    </span><span class="com">// Load the data from the JO into this class</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+
+    </span><span class="com">// Convert/ add this class’s data into a JO</span><span class="pln">
+    result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+  </span></pre>
+    <hr class="line">
+    <h3><b>For the rest of us:</b></h3>
+
+    <p>There are several good ways to <b>save game data in Unity</b>, an overview of options can be found <a
+        href="https://gamedev.stackexchange.com/questions/110958/what-is-the-proper-way-to-handle-data-between-scenes">here</a>.
+      However in my opinion, one of the most flexible yet resilient ways to persist data is by <b>writing it to a
+        file</b>. Design choices begt more design choices, and a developer must decide exactly what to write to a file.
+      A popular option is <a href="https://blogs.unity3d.com/2014/06/24/serialization-in-unity/">serialization</a>, but
+      I’m going to use <a href="https://json.org/">JSON</a> as the format to write data to a file. <b>JSON is
+        lightweight, easy to read, and well known across the programming ecosystem</b>.
+      I will note, that because JSON is easy to read, it's also easy to edit
+      which makes it a poor option if you want to discourage players from
+      tinkering with the game files. I’m not worried about this for my games,
+      in fact I would encourage my players to tinker with the game code as an
+      introduction to programming or game design. But the decision is up to
+      you.</p>
+
+    <hr class="line">
+
+    <p>The first step to writing JSON to a file requires us to actually convert game objects into JSON. To assist me,
+      I’m using <b>a library called LightJson created by MarconLopezC found <a
+          href="https://github.com/MarcosLopezC/LightJson">here</a></b>. To add this to your unity project, first
+      <b>check the license</b>,
+      then click the "Clone or download" button and "Download ZIP". Unzip the
+      package and copy the license, Readme, and cs files into your Unity
+      project assets folder.</p>
+    <img class="center" src="Json1_files/LightJsonFiles.PNG">
+    <h3>Now, let's get to coding.</h3>
+    <p>I’ll create a new file called JsonConverterExample, with a new
+      class called ExampleNocabChild that I will be attempting to convert into
+      JSON (more experienced programmers may have a hint of where this
+      tutorial is going). For now the class is empty.</p>
+    <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">using</span><span class="pln"> </span><span class="typ">LightJson</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+</span><span class="pun">}</span></mark></pre>
+    <br>
+    <p>I want to <b>convert the object into JSON</b>, so I’ll create a
+      function called toJson() which will eventually convert a
+      ExampleNocabChild into a JSON form. The LightJson library provides a
+      suite of useful tools, functions and objects that I won’t go into detail
+      over. All you need to know for now is <b>the JsonObect type</b> which can be converted into a string via the
+      `JsonObject.ToString()` function.</p>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+</span><mark><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+        </span><span class="com">// Convert/ add this class’s data into a JO</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span></mark><span class="pln">
+
+</span><span class="pun">}</span></pre>
+
+    <br>
+    <p>Let’s <b>create a tester MonoBehavior, attach it to an empty game object</b> and see what happens! (You may need
+      to put this MonoBehavior in a new appropriatly named file)</p>
+    <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabTester</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testChild </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testChild</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">().</span><span class="typ">ToString</span><span class="pun">());</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></mark></pre>
+
+    <br>
+    <img class="center" src="Json1_files/JsonTestLog1.PNG">
+    <br>
+    <br>
+
+    <p>Not very exciting, an empty JSON object is simply a pair of curly
+      braces. Let’s add some data to the ExampleNocabChild class and update
+      the the toJson() function.</p>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><mark><span class="kwd">public</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">;</span></mark><span class="pln">
+
+    </span><mark><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span></mark><span class="pln">
+
+    
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+
+        </span><span class="com">// Convert/ add this class’s data into a JO</span><span class="pln">
+        </span><mark><span class="pln">result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span></mark><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabTester</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testChild </span><span class="pun">=</span><span class="pln"> </span><mark><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">10</span><span class="pun">);</span></mark><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testChild</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">().</span><span class="typ">ToString</span><span class="pun">());</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <br>
+    <p>If we run our test script again we can see a slightly more interesting json object.</p>
+    <img src="Json1_files/JsonTestLog2.PNG">
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr class="line">
+    <p>So we have a way to convert an object into JSON, before we get too invested we need to make sure we can
+      <b>convert from JSON back into an object</b>.
+      Thinking more generally, we want to use a JSON object as a blueprint to
+      construct a new instance of the ExampleNocabChild object. What’s needed
+      is <b>a constructor that takes in a JsonObject</b> and extracts the data.</p>
+
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+</span><mark><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+        </span><span class="com">// Load the data from the JO into this class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span></mark><span class="pln">
+    
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+
+            </span><span class="com">// Convert/ add this class’s data into a JO</span><span class="pln">
+            result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+    <p>The TODO is ignored in this example but is incredibly important.
+      There is no guarantee that the provided JsonObject has a field called
+      “data”. This is <b>one of the major negatives of using JSON as the data storage tool: It's quite easy for data to
+        become corrupted</b>
+      which can cause the loaded object to become invalid, and in the worst
+      case crash the program, and in extreme cases introduces an attack vector
+      for hackers. The best way to mitigate this risk depends on the context,
+      object being loaded, laziness of the developer and many other important
+      factors. <b>Always validate the data before using it even if you wrote the data yourself</b>.</p>
+    <p>Update the NocabTester class and valadate the new constructor works
+      and data is correctly extracted from the JSON object. The number 10
+      should be printed to the debug log.</p>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabTester</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testChildA </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">10</span><span class="pun">);</span><span class="pln">
+        </span><mark><span class="typ">ExampleNocabChild</span><span class="pln"> testChildB </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="pln">testChildA</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">());</span></mark><span class="pln">
+
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><mark><span class="pln">testChildB</span><span class="pun">.</span><span class="pln">data</span></mark><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <br><br>
+    <p>This example is simple. Increasing the complexity of the data that
+      is being JSON-ified should be considered on a case by case basis, and
+      the principles for data serialization still apply here. <b>Future JSON
+        tutorials on this website will focus on increasing the complexity of the
+        class hierarchy, namelay JSON-ifying abstract classes and adding
+        interfaces</b>.</p>
+
+
+
+
+    <br class="large">
+    <h3>Code Dump:</h3>
+
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+        </span><span class="com">// Load the data from the JO into this class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+
+            </span><span class="com">// Convert/ add this class’s data into a JO</span><span class="pln">
+            result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabTester</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testChildA </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">10</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testChildB </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="pln">testChildA</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">());</span><span class="pln">
+
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testChildB</span><span class="pun">.</span><span class="pln">data</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+    <hr class="line">
+
+  </div> <!-- END NARROW CONTENT -->
+
+
+</body>
+
+</html>

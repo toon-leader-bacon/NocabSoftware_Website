@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+
+
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <hr class="line">
+    <h3><b>For those who know what a lambda is:</b></h3>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">LambdaTest</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+  </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> example</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">char</span><span class="pln"> result1 </span><span class="pun">=</span><span class="pln"> convertChar</span><span class="pun">(</span><span class="str">'h'</span><span class="pun">,</span><span class="pln"> otherMethod</span><span class="pun">);</span><span class="pln">
+    </span><span class="kwd">char</span><span class="pln"> result2 </span><span class="pun">=</span><span class="pln"> convertChar</span><span class="pun">(</span><span class="str">'h'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> s</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> </span><span class="pun">);</span><span class="pln">
+
+    </span><span class="typ">Func</span><span class="pun">&lt;</span><span class="kwd">int</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">string</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">bool</span><span class="pun">&gt;</span><span class="pln"> testLambda </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> s</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln"> </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">char</span><span class="pln"> result3 </span><span class="pun">=</span><span class="pln"> convertChar</span><span class="pun">(</span><span class="str">'h'</span><span class="pun">,</span><span class="pln"> testLambda</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+
+  </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> convertChar</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> ch</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Func</span><span class="pun">&lt;</span><span class="kwd">int</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">string</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">bool</span><span class="pun">&gt;</span><span class="pln"> func</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// Nonsense function to demonstrate function as parameter</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">func</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="str">"test string"</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> ch</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">func</span><span class="pun">(</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="str">"abc"</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'a'</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'z'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+
+  </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">bool</span><span class="pln"> otherMethod</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> s</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// Do something here</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+  </span></pre>
+    <hr class="line">
+    <h3><b>For the rest of us:</b></h3>
+
+    <p>A tenant of good code design is "single point of control". A simple
+      way to understand this is "No repetition of code". Not exactly, but for
+      now it's a good enough definition.</p>
+
+    <p>A lambda function, sometimes called an “anonymous” function is a
+      nameless helper function, too small or too specific to give a name.
+      Functions, in C# are First Class Citizens, meaning they have the same
+      “rights” as other structures like variables. Most notably, first class
+      citizens can be passed to a function as an argument or parameter.</p>
+
+    <p>In the following examples, we will explore the use of functions as
+      parameters as a way to simplify and make our code more elegant.</p>
+
+    <p>Consider names of background characters in video games. Characters
+      who the game designer wants to name but doesn’t really care about what
+      the name is. One way to generate names is by taking existing names and
+      changing a few letters. The results of this algorithm are suitably
+      random/ exotic but also recognizable enough so as not to totally
+      alienate the player. In an effort to practice something new, lets
+      totally over engineer this problem and use lambda functions.</p>
+
+
+    <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln">  generateName</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// A function that generates a name</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> simpleScrambleAlg</span><span class="pun">(</span><span class="str">"ender"</span><span class="pun">.</span><span class="typ">ToCharArray</span><span class="pun">());</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> simpleScrambleAlg</span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> oldName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// NOTE: Will always return a new string, and never modify oldName arg</span><span class="pln">
+  </span><span class="com">// 1) pick rand char to convert keeping v/c type</span><span class="pln">
+  </span><span class="com">// 2) pick rand v to convert to v</span><span class="pln">
+  </span><span class="com">// 3) pick rand c to convert to c</span><span class="pln">
+
+</span><span class="pun">}</span></mark></pre>
+
+    <br>
+    <p>This is the basic outline of what we want: A function that
+      returns a string with no given input. In an effort to build a small
+      interface, let's put the actual algorithm in its own function.</p><br>
+    <p>Let's impliment step 1) pick rand char to convert keeping v/c type.
+      In simple terms: Pick a random letter from oldName and change it, but vowels stay vowels and consonants stay
+      consonants</p><br>
+
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> simpleScrambleAlg</span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> oldName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// NOTE: Will always return a new string, and never modify oldName arg</span><span class="pln">
+  </span><span class="com">// 1) pick rand char to convert keeping v/c type</span><span class="pln">
+  </span><span class="com">// 2) pick rand v to convert to v</span><span class="pln">
+  </span><span class="com">// 3) pick rand c to convert to c</span><span class="pln">
+</span><mark><span class="pln">
+  </span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> safeOldName </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[])</span><span class="pln">oldName</span><span class="pun">.</span><span class="typ">Clone</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="kwd">int</span><span class="pln"> randIndex </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> safeOldName</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> randChar </span><span class="pun">=</span><span class="pln"> safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">];</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isVowel</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> 
+    </span><span class="com">// pull a random new vowel</span><span class="pln">
+    replacement </span><span class="pun">=</span><span class="pln"> </span><span class="com">// TODO</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// pull a random new consonant</span><span class="pln">
+    replacement </span><span class="pun">=</span><span class="pln"> </span><span class="com">// TODO</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+
+  </span><span class="com">// TODO: steps 2 and 3  of the above algorithim</span></mark><span class="pln">
+</span><span class="pun">}</span></pre>
+
+    <br>
+    <p>Explination (skip this if you're comfortable with the code above):<br>
+      Clone oldName so we can do sugery/ modifications without messing up the origional.<br>
+      Use char[] (char array) because we want to operate on individual characters, and using an array is easier than
+      using a string.<br>
+      Then pick a random number between 0 and the size of the char[]. This will be our index<br>
+      Pull out the character at the randIndex, and depending on if it's a
+      vowel or not we generate a different kind of replacement char.<br>
+      Then, take the replacement char and put it back into the char[] at the same index.</p>
+    <br>
+    <br>
+    <p>Now we fix the first TODO, generating a random vowel</p>
+
+    <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> getRandVowel</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">int</span><span class="pln"> randIndex </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">vowels</span><span class="pun">.</span><span class="typ">Count</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">vowels</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">];</span><span class="pln">  </span><span class="com">// A listed enumeration of all vowels</span><span class="pln">
+</span><span class="pun">}</span></mark></pre>
+    <br>
+    <p>Look at the bottom for the full code which includes the list NameGen.vowels</p><br>
+    <p>Generating a random vowel is well and good, but we want a guarantee
+      that the new vowel is different from the old vowel. We need another
+      method to interpret the results of getRandVowel().</p><br>
+    <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> convertVowel</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> oldChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/**
+   * Provided an old character this method will generate a random new 
+   *   vowel (guaranteed different from oldChar)
+   *
+   * If oldChar is empty string, a random new vowel will be returned
+   */</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> newChar </span><span class="pun">=</span><span class="pln"> getRandVowel</span><span class="pun">();</span><span class="pln">
+  </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">oldChar </span><span class="pun">==</span><span class="pln"> newChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    newChar </span><span class="pun">=</span><span class="pln"> getRandVowel</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> newChar</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></mark></pre>
+    <br>
+    <p>Is convertVowel() guaranteed to return? No.<br>Do I care? No.<br>While
+      it is possible that getRandVowel() returns the same vowel every time,
+      and therefor never breaks the while loop, this is incredably unlikely
+      and the player and designer will have bigger problems if that ever
+      happens.</p><br>
+    <p>Let's add this back to our simpleScrambleAlg() function.</p>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> simpleScrambleAlg</span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> oldName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// NOTE: Will always return a new string, and never modify oldName arg</span><span class="pln">
+  </span><span class="com">// 1) pick rand char to convert keeping v/c type</span><span class="pln">
+  </span><span class="com">// 2) pick rand v to convert to v</span><span class="pln">
+  </span><span class="com">// 3) pick rand c to convert to c</span><span class="pln">
+
+  </span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> safeOldName </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[])</span><span class="pln">oldName</span><span class="pun">.</span><span class="typ">Clone</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="kwd">int</span><span class="pln"> randIndex </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> safeOldName</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> randChar </span><span class="pun">=</span><span class="pln"> safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">];</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isVowel</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// pull a random new vowel</span><span class="pln">
+    </span><mark><span class="pln">replacement </span><span class="pun">=</span><span class="pln"> convertVowel</span><span class="pun">();</span></mark><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// pull a random new consonant</span><span class="pln">
+    </span><span class="com">// TODO</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+
+  </span><span class="com">// TODO: steps 2 and 3  of the above algorithim</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <br>
+    <p>Now do the same for convertConsonant().</p><br>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> simpleScrambleAlg</span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> oldName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// NOTE: Will always return a new string, and never modify oldName arg</span><span class="pln">
+  </span><span class="com">// 1) pick rand char to convert keeping v/c type</span><span class="pln">
+  </span><span class="com">// 2) pick rand v to convert to v</span><span class="pln">
+  </span><span class="com">// 3) pick rand c to convert to c</span><span class="pln">
+
+  </span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> safeOldName </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[])</span><span class="pln">oldName</span><span class="pun">.</span><span class="typ">Clone</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="kwd">int</span><span class="pln"> randIndex </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> safeOldName</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> randChar </span><span class="pun">=</span><span class="pln"> safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">];</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isVowel</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// pull a random new vowel</span><span class="pln">
+    replacement </span><span class="pun">=</span><span class="pln"> convertVowel</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// pull a random new consonant</span><span class="pln">
+    </span><mark><span class="pln">replacement </span><span class="pun">=</span><span class="pln"> convertconsonant</span><span class="pun">();</span></mark><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+
+  </span><span class="com">// TODO: steps 2 and 3  of the above algorithim</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">...</span><span class="pln">
+</span><mark><span class="pln">
+</span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> convertConsonant</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> oldChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/**
+   * Provided an old character this method will generate a random new
+   *   consonant (guaranteed different from oldChar)
+   *
+   * If oldChar is empty string, a random new consonant will be returned
+   */</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> newChar </span><span class="pun">=</span><span class="pln"> getRandConsonant</span><span class="pun">();</span><span class="pln">
+  </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">oldChar </span><span class="pun">==</span><span class="pln"> newChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    newChar </span><span class="pun">=</span><span class="pln"> getRandconsonant</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> newChar</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></mark><span class="pln">
+</span><mark><span class="pln">
+</span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> getRandconsonant</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">int</span><span class="pln"> randIndex </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">consonants</span><span class="pun">.</span><span class="typ">Count</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">consonants</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">];</span><span class="pln">  </span><span class="com">// A listed enumeration of all consonants</span><span class="pln">
+</span><span class="pun">}</span></mark></pre>
+    <br>
+    <p>Cool, now we have step 1 completed in our simpleScrambleAlg().
+      But, something's wrong. Not functunally but with our design. Look at
+      convertConsonant() and convertVowel() side by side. These two functions
+      are almost identical, with only minor differences between them.</p><br>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> convertConsonant</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> oldChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/**
+   * Provided an old character this method will generate a random new
+   *   consonant (guaranteed different from oldChar)
+   *
+   * If oldChar is empty string, a random new consonant will be returned
+   */</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> newChar </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">getRandConsonant</span><span class="pun">();</span></mark><span class="pln">  </span><span class="com">// different</span><span class="pln">
+  </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">oldChar </span><span class="pun">==</span><span class="pln"> newChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    newChar </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">getRandConsonant</span><span class="pun">();</span></mark><span class="pln">     </span><span class="com">// different</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> newChar</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> convertVowel</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> oldChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/**
+   * Provided an old character this method will generate a random new
+   *   vowel (guaranteed different from oldChar)
+   *
+   * If oldChar is empty string, a random new vowel will be returned
+   */</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> newChar </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">getRandVowel</span><span class="pun">();</span></mark><span class="pln">  </span><span class="com">// different</span><span class="pln">
+  </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">oldChar </span><span class="pun">==</span><span class="pln"> newChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    newChar </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">getRandVowel</span><span class="pun">();</span></mark><span class="pln">     </span><span class="com">// different</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> newChar</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <br>
+    <p>It'd be super cool if we can find a way to merge these pieces of
+      code. Some way to abstract the character generator functions. Well,
+      because C# considers functions first class citizens we can pass it in as
+      a paramater!</p><br>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">char</span><span class="pln"> convertChar</span><span class="pun">(</span><span class="kwd">char</span><span class="pln"> oldChar</span><span class="pun">,</span><span class="pln"> </span><mark><span class="typ">Func</span><span class="str">&lt;char&gt;</span><span class="pln"> charBuilder</span></mark><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/**
+   * Provided an old character and a function that randomly generates characters,
+   *   this method will generate a random new character (guaranteed different from oldChar)
+   *   from the outputs of charBuilder arg.
+   *
+   * If oldChar is empty string, a random new char will be returned from the charBuilder's pool
+   */</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> newChar </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">charBuilder</span><span class="pun">();</span></mark><span class="pln">
+  </span><span class="kwd">while</span><span class="pln"> </span><span class="pun">(</span><span class="pln">oldChar </span><span class="pun">==</span><span class="pln"> newChar</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    newChar </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">charBuilder</span><span class="pun">();</span></mark><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> newChar</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <br>
+    <p>This signiture changes breaks our simpleScrambleAlg(). We no
+      longer have convertVowel() or convertConsonant(), only convertChar(). To
+      keep the functunality the same as before, we need to pass in the
+      character generator functions getRandVowel and getRandConsonat.</p><br>
+    <p>The way to conseptualize this code is by noticing the division of
+      behavior. The getRandVowel/ getRandConsonat functions are the engine.
+      They're just dumb generators that build a specific object. The
+      convertChar function is the logic that sits ontop of an engine and
+      processes the output in a certain way. We want this process to be the
+      same regardless of what characters are being generated.<br>This allows
+      for easily swapping out new sets of characters in the generation pool.
+      If for instance we decided we don't like names with the letter 'z' we
+      can build a getRandConsonatNoZ() function and it'll still work in the
+      convertChar() function.</p><br>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> simpleScrambleAlg</span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> oldName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// NOTE: Will always return a new string, and never modify oldName arg</span><span class="pln">
+  </span><span class="com">// 1) pick rand char to convert keeping v/c type</span><span class="pln">
+  </span><span class="com">// 2) pick rand v to convert to v</span><span class="pln">
+  </span><span class="com">// 3) pick rand c to convert to c</span><span class="pln">
+
+  </span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> safeOldName </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[])</span><span class="pln">oldName</span><span class="pun">.</span><span class="typ">Clone</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="kwd">int</span><span class="pln"> randIndex </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> safeOldName</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> randChar </span><span class="pun">=</span><span class="pln"> safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">];</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isVowel</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> 
+    replacement </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">convertChar</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">,</span><span class="pln"> getRandVowel</span><span class="pun">);</span></mark><span class="pln">
+  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> 
+    replacement </span><span class="pun">=</span><span class="pln"> </span><mark><span class="pln">convertChar</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">,</span><span class="pln"> getRandConsonat</span><span class="pun">);</span></mark><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+
+</span><span class="pun">}</span></pre>
+    <br>
+    <hr class="line">
+    <br>
+    <p>Now, this is where I stopped with my design. I think having a stand
+      alone method for each letter generator is good design and makes sense
+      to me. However, for the sake of a tutorial, let's talk about lambda
+      functions.</p>
+    <br>
+    <p>A lambda function is a function that takes input and output but is
+      un-named. It has a funky looking syntax, but I'll break down each part.</p>
+
+    <pre class="prettyprint prettyprinted"
+      style=""><span class="typ">Func</span><int, string,="" bool=""><span class="pln"> testLambda </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> i</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> s</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">i </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">10</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"hello"</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> s</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> </span><span class="pun">};</span></int,></pre>
+    <p>I'm declaring a function variable with the name testLambda (ironic I
+      know, naming the nameless). The first set of parenthesis (...) defines
+      the input variables to the lambda. This syntax looks like the standard
+      function input syntax for regular functions. The '=&gt;' sign signals
+      the start of the lambda and is called the '=&gt; operator'. Everythign
+      inside the curly braces {...} is a regular function, althought it's not
+      formatted well.</p>
+
+    <br>
+    <p>Using a lambda, we can rewrite our code to look like this.</p>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> simpleScrambleAlg</span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> oldName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// NOTE: Will always return a new string, and never modify oldName arg</span><span class="pln">
+  </span><span class="com">// 1) pick rand char to convert keeping v/c type</span><span class="pln">
+  </span><span class="com">// 2) pick rand v to convert to v</span><span class="pln">
+  </span><span class="com">// 3) pick rand c to convert to c</span><span class="pln">
+
+  </span><span class="kwd">char</span><span class="pun">[]</span><span class="pln"> safeOldName </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">char</span><span class="pun">[])</span><span class="pln">oldName</span><span class="pun">.</span><span class="typ">Clone</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="kwd">int</span><span class="pln"> randIndex </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> safeOldName</span><span class="pun">.</span><span class="typ">Length</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> randChar </span><span class="pun">=</span><span class="pln"> safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">];</span><span class="pln">
+  </span><span class="kwd">char</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">isVowel</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> 
+    </span><span class="com">// pull a random new vowel</span><span class="pln">
+    replacement </span><span class="pun">=</span><span class="pln"> convertChar</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">,</span><span class="pln"> </span><mark><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> ri </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">vowels</span><span class="pun">.</span><span class="typ">Count</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">vowels</span><span class="pun">[</span><span class="pln">ri</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">});</span></mark><span class="pln">
+  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// pull a random new consonant</span><span class="pln">
+    replacement </span><span class="pun">=</span><span class="pln"> convertChar</span><span class="pun">(</span><span class="pln">randChar</span><span class="pun">,</span><span class="pln"> </span><mark><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> ri </span><span class="pun">=</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="typ">Random</span><span class="pun">.</span><span class="typ">Range</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">consonants</span><span class="pun">.</span><span class="typ">Count</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">NameGen</span><span class="pun">.</span><span class="pln">consonants</span><span class="pun">[</span><span class="pln">ri</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">});</span></mark><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  safeOldName</span><span class="pun">[</span><span class="pln">randIndex</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> replacement</span><span class="pun">;</span><span class="pln">
+
+  </span><span class="com">// TODO: steps 2 and 3  of the above algorithim</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <p>While I think this looks messy, other developers would perfer it.
+      Looking at this code again, I can now clearly see a place to reduce my
+      code some more. The two generator functions are almost identical,
+      perhapse we can even do away with the entire notion of a function and
+      simply pass in a list of letters (which would defete the pourpose of
+      learning lambdas but oh-well)! However, I'll be keeping my code the way
+      it is below. Passing in a function to generate a vowel is more powerfull
+      than a list. With a function, I can easially weight the vowel list
+      favoring the letter A over the letter O for instance.</p>
+    <br class="large">
+
+    <h3>Code Dump</h3>
+    <pre>public class NameGen : MonoBehaviour
+{
+
+    public void Start()
+    {
+        // string newName = simpleScrambleAlg("ender".ToCharArray());
+        for (int i = 0; i &lt; 300; i++)
+        {
+            string newName = SylableNameGen.genSylableName();
+            //Debug.Log(newName);
+            lc.addEvent(newName);
+
+        }
+    }
+
+    public LogController lc;
+
+    public void genNameTest()
+    {
+        string newName = simpleScrambleAlg("testabcde".ToCharArray());
+        lc.addEvent(newName);
+    }
+    
+    private static string simpleScrambleAlg(char[] oldName) {
+        // NOTE: Will always return a new string, and never modify oldName arg
+        // 1) pick rand char to convert keeping v/c type
+        // 2) pick rand v to convert to v
+        // 3) pick rand c to convert to c
+        
+        char[] safeOldName = (char[])oldName.Clone();
+
+        int randIndex = UnityEngine.Random.Range(0, safeOldName.Length);
+        char randChar = safeOldName[randIndex];
+        char replacement;
+        if (isVowel(randChar)) { replacement = convertChar(randChar, getRandVowel); }
+        else { replacement = convertChar(randChar, getRandConsonat); }
+        safeOldName[randIndex] = replacement;
+
+        // 2)
+        // Find all the vowels in the oldName
+        List<int> vowelIndex = new List<int>();
+        List<int> consonantIndex = new List<int>();
+        for (int i = 0; i &lt; safeOldName.Length; i++) {
+            if (isVowel(safeOldName[i])) { vowelIndex.Add(i); }
+            else { consonantIndex.Add(i); }
+        }
+
+        // Pull a random index from the vowel list
+        int randomVowelIndex = vowelIndex[UnityEngine.Random.Range(0, vowelIndex.Count)];
+        char randomVowel = safeOldName[randomVowelIndex];
+        replacement = convertChar(randomVowel, getRandVowel);
+        safeOldName[randomVowelIndex] = replacement;
+
+        // 3)
+        int randomConsonantIndex = consonantIndex[UnityEngine.Random.Range(0, consonantIndex.Count)];
+        char randomCons = safeOldName[randomConsonantIndex];
+        replacement = convertChar(randomCons, getRandConsonat);
+        safeOldName[randomConsonantIndex] = replacement;
+
+        return new string(safeOldName);
+
+    }
+
+    public static char convertChar(char oldChar, Func<char> charBuilder) {
+        /**
+         * Provided an old character and a function that randomly generates characters,
+         *   this method will generate a random new character (guaranteed different from oldChar)
+         *   from the outputs of charBuilder arg.
+         * 
+         * If oldChar is empty string, a random new char will be returned from the charBuilder's pool
+         */
+        char newChar = charBuilder();
+        while(oldChar == newChar) {
+            newChar = charBuilder();
+        }
+        return newChar;
+    }
+
+
+
+
+    public static bool isVowel(char c) { return vowels.Contains(c); }
+
+    public static bool isConsonant(char c) { return !isVowel(c); }
+
+    public static char getRandVowel() {
+        int randIndex = UnityEngine.Random.Range(0, NameGen.vowels.Count);
+        return NameGen.vowels[randIndex];
+    }
+
+    public static char getRandConsonat() {
+        int randIndex = UnityEngine.Random.Range(0, NameGen.consonants.Count);
+        return NameGen.consonants[randIndex];
+    }
+
+    public static char getRandChar() {
+        List<char> allLetters = new List<char>(vowels);
+        allLetters.AddRange(consonants);
+        int randIndex = UnityEngine.Random.Range(0, allLetters.Count);
+        return allLetters[randIndex];
+    }
+
+
+    public static readonly List<char> vowels = new List<char>() {
+        'a', 'e', 'i', 'o', 'u'
+    };
+
+    public static readonly List<char> consonants = new List<char>() {
+        'b', 'c', 'd', 'f', 'g',
+        'h', 'j', 'k', 'l', 'm',
+        'n', 'p', 'q', 'r', 's',
+        't', 'v', 'w', 'x', 'y',
+        'z'
+    };
+}</char></char></char></char></char></char></char></int></int></int></int></pre>
+  </div> <!-- END NARROW CONTENT -->
+
+
+</body>
+
+</html>

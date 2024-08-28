@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+	<link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+	<link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav> <!-- End of navbar -->
+
+    <!-- Game design has different fonts -->
+    <div class="game-design">
+      <h3>Difficulty in Single Player</h3>
+      <p><mark>How can we make a game more challenging?</mark> I’m not
+        talking about designing a new game to be hard to win at, I’m talking
+        about taking an existing game or prototype and changing things to make
+        it more challenging for the player. For now I’m just considering single
+        player games to avoid the related question of “how do I make a game more
+        difficult for all players”, I just care about making the experience of
+        one player more challenging. <mark>There are two main approaches for adding difficulty to a game: HP sliders and
+          smarter AI.</mark></p><br>
+      <p>I’m using the term “HP sliders” as a catchall term to represent
+        all possible variables in a game, not just the health variable. A
+        slider is just a term to represent a range of values for the variable,
+        like a sound volume bar. <mark>A more difficult game gives the bad guys more health and the player less
+          health.</mark>
+        Additionally, giving the bad guys more attack, speed, or range will
+        translate into them doing more damage to the player. So variable sliders
+        for other statistics can still be thought of taking health away from
+        the player, which we defined as the difficulty of a game.</p><br>
+      <p>Internal stats aren’t the only variables that can be changed.
+        The number of enemies can also be changed to affect difficulty. More bad
+        guys means more difficulty. Variable changes can also be applied to
+        neutral elements of the game to increase difficulty. For instance, less
+        ammo or health spawns, smaller reward drops, or even a more dangerous
+        layout variants of a room will all increase difficulty.</p><br>
+      <p>Often times however, these <mark>variable sliders are seen as cheap tricks to make the game more
+          difficult.</mark>
+        Players may think that the opponent is no longer playing a fair game.
+        And that’s a correct observation, they literally have better stats or
+        more troops. Consider Sid Meier's Civilization games, at a certain
+        difficulty point the rival nations start to “cheat” and get free bonuses
+        to combat, their economies or technological growth while the player
+        starts off behind and handicapped. The game is no longer balanced, it’s
+        easier for one side (or one player if you’re considering multiplayer
+        games) than another. But there’s nothing inherently wrong with that
+        design perspective. It’s an easy way to add difficulty to a game that
+        might need it, and <mark>single player games are often ok with making the computer unevenly powerful.</mark></p>
+      <br>
+      <p>The alternative to these kinds of “cheap tricks” is <mark>making the enemies more intelligent.</mark>
+        Building a smarter AI for the player to play against may be more fair,
+        but the costs of development and the actual extra fun a player would
+        have may not be worth it. On one hand, the HP sliders simply provide the
+        computer with more raw resources to work with. Smarter AI allows the
+        computer to perform better with the few resources it already has. An
+        artificial intelligence doesn’t have to be a neural network or a complex
+        codebase simulating general intelligence. Simply designing a better
+        rule or set of rules for the AI to follow is enough: “Before jumping out
+        of cover, make sure your gun is loaded”, or “Don’t just run straight
+        toward the player when trying to touch them, but zig-zag a little
+        randomly to make it harder to predict”. Developing different patterns of
+        AI, or introducing a little random chance into movement or decision
+        making is an ok replacement for more intelligent AI, up to a certain
+        point. Additionally, the computer AI can cheat. Give the AI access to
+        restricted information, or knowledge of upcoming rng values. Letting the
+        AI cheat and stack the deck a little will make the game more difficult,
+        but again, it might not be seen as “fair”.</p><br>
+
+      <p><mark>TL;DR Difficulty in a game comes from two main areas:
+          variable sliders and smarter AI. Conceptually think of these two options
+          as giving the enemy more resources to work with vs having the enemy use
+          those resources more efficiently. Difficulty can also come from non
+          enemy parts of the game like loot drops and map layouts. Also, when
+          developing an enemy AI for a single player game there’s nothing that
+          says the computer can’t cheat.</mark></p><br>
+
+      <p>Continue reading about difficulty, complexity and challenge of a game <a
+          href="https://nocabsoftware.com/src/game_design/complexity.html">here</a>.</p>
+      <br class="large">
+      <br class="large">
+    </div> <!-- End game design text type -->
+  </div> <!-- End of container-narrow  All stuff should be in this div-->
+
+</body>
+
+</html>

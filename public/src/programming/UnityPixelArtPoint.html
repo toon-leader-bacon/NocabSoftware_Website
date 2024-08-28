@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+
+
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <hr class="line">
+    <h3><b>For those who've been here before:</b></h3>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">PixelTestTest</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+  </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> nocabDrawPoint</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        
+        </span><span class="typ">Texture2D</span><span class="pln"> nocabTex </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Texture2D</span><span class="pun">(</span><span class="lit">32</span><span class="pun">,</span><span class="pln"> </span><span class="lit">32</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="com">// Numbers off the edge wrap</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">;</span><span class="pln">
+        nocabTex</span><span class="pun">.</span><span class="typ">SetPixel</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Color</span><span class="pun">.</span><span class="pln">black</span><span class="pun">);</span><span class="pln">
+
+        nocabTex</span><span class="pun">.</span><span class="pln">filterMode </span><span class="pun">=</span><span class="pln"> </span><span class="typ">FilterMode</span><span class="pun">.</span><span class="typ">Point</span><span class="pun">;</span><span class="pln"> </span><span class="com">// Tell Unity not to blur neighbor pixels</span><span class="pln">
+        nocabTex</span><span class="pun">.</span><span class="typ">Apply</span><span class="pun">();</span><span class="pln">  </span><span class="com">// Expensive, do only at the end</span><span class="pln">
+
+        </span><span class="com">// Moved to PixelDrawer static helper class</span><span class="pln">
+        </span><span class="typ">Rect</span><span class="pln"> rect </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Rect</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> nocabTex</span><span class="pun">.</span><span class="pln">width</span><span class="pun">,</span><span class="pln"> nocabTex</span><span class="pun">.</span><span class="pln">height</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">Vector2</span><span class="pln"> piviot </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Vector2</span><span class="pun">(</span><span class="lit">0.5f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.5f</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">Sprite</span><span class="pun">.</span><span class="typ">Create</span><span class="pun">(</span><span class="pln">nocabTex</span><span class="pun">,</span><span class="pln"> rect</span><span class="pun">,</span><span class="pln"> piviot</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+  </span></pre>
+    <hr class="line">
+    <h3><b>For the rest of us:</b></h3>
+
+    <p>This is the Pixel Art Toolbox, a collection of functions that allow us to <b>programmatically draw pixel art in
+        Unity</b>.
+      But before we can make anything complicated (or even before we can make
+      anything simple) we need to be able to make something. <b>How do we draw a single pixel in Unity?</b></p>
+
+    <p>We’ll use the Unity 2D <a href="https://docs.unity3d.com/Manual/Sprites.html">Sprite</a> Game Object. Every
+      “Sprite Game Object” has a “<a href="https://docs.unity3d.com/Manual/class-SpriteRenderer.html">Sprite
+        Renderer</a>” component attached. One element of this Sprite Renderer component is a “<a
+        href="https://docs.unity3d.com/ScriptReference/Sprite.html">Sprite</a>”, confusing I know. See the image below.
+    </p>
+    <ul>
+      <li>Red = <a href="https://docs.unity3d.com/Manual/Sprites.html">Sprite Game Object</a></li>
+      <li>Blue = <a href="https://docs.unity3d.com/Manual/class-SpriteRenderer.html">Sprite Renderer component</a></li>
+      <li>Green = <a href="https://docs.unity3d.com/ScriptReference/Sprite.html">Sprite field</a></li>
+    </ul>
+
+    <img class="center" src="UnityPixelArtPoint_files/UnitySpriteInspector.PNG">
+    <br>
+    <br>
+    <p>This is good, but we can’t create the green box Sprite fields very easily in code. However, every sprite has a
+      thing called a <a href="https://docs.unity3d.com/ScriptReference/Sprite-texture.html">texture</a>. <b>Textures can
+        be created easily and tells the sprite what it should look like.</b></p>
+    <p>Take a look at this code that builds a 32x32 texture and draws a pixel to the center.</p>
+    <br>
+    <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">using</span><span class="pln"> </span><span class="typ">System</span><span class="pun">.</span><span class="typ">Collections</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">System</span><span class="pun">.</span><span class="typ">Collections</span><span class="pun">.</span><span class="typ">Generic</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabPixelArtScratch</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">SpriteRenderer</span><span class="pln"> sr</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> nocabTest</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        
+        </span><span class="typ">Texture2D</span><span class="pln"> nocabTex </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Texture2D</span><span class="pun">(</span><span class="lit">32</span><span class="pun">,</span><span class="pln"> </span><span class="lit">32</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">;</span><span class="pln">
+        nocabTex</span><span class="pun">.</span><span class="typ">SetPixel</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Color</span><span class="pun">.</span><span class="pln">black</span><span class="pun">);</span><span class="pln">
+
+ </span><span class="com">/*16*/</span><span class="pln"> nocabTex</span><span class="pun">.</span><span class="pln">filterMode </span><span class="pun">=</span><span class="pln"> </span><span class="typ">FilterMode</span><span class="pun">.</span><span class="typ">Point</span><span class="pun">;</span><span class="pln">
+ </span><span class="com">/*17*/</span><span class="pln"> nocabTex</span><span class="pun">.</span><span class="typ">Apply</span><span class="pun">();</span><span class="pln">  </span><span class="com">// Expensive, do only at the end</span><span class="pln">
+
+ </span><span class="com">/*19*/</span><span class="pln"> </span><span class="typ">Rect</span><span class="pln"> rect </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Rect</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> texture</span><span class="pun">.</span><span class="pln">width</span><span class="pun">,</span><span class="pln"> texture</span><span class="pun">.</span><span class="pln">height</span><span class="pun">);</span><span class="pln">
+ </span><span class="com">/*20*/</span><span class="pln"> </span><span class="typ">Vector2</span><span class="pln"> piviot </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Vector2</span><span class="pun">(</span><span class="lit">0.5f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.5f</span><span class="pun">);</span><span class="pln">
+ </span><span class="com">/*21*/</span><span class="pln">  </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">Sprite</span><span class="pun">.</span><span class="typ">Create</span><span class="pun">(</span><span class="pln">texture</span><span class="pun">,</span><span class="pln"> rect</span><span class="pun">,</span><span class="pln"> piviot</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></mark></pre>
+
+    <p>Review the battle strategy:</p>
+    <ol>
+      <li>Make a new blank Texture2D</li>
+      <li>Draw whatever we want onto it</li>
+      <li>??? (line 16 and 17)</li>
+      <li>Apply the texture to the sprite</li>
+    </ol>
+
+    <p>Step 3 is important, there are some magic words that need to be
+      used in order to tell unity that we want pixel art and not regular
+      sprites.</p>
+    <p><b>Line 16</b> tells Unity that we want to draw pixel art and to use <b>crisp edges between pixels</b>. The other
+      options (FilterMode.Bilinear and Trilinear) cause the pixels to blur and smooth into their neighbors.</p>
+    <p><b>Line 17</b> actually causes the pixel changes to go into effect. Changing pixels on a texture is a moderately
+      expensive operation, so any <b>SetPixel(...) functions don’t immediately change the pixels.</b> Instead they are
+      all queued up and done when the <a
+        href="https://docs.unity3d.com/ScriptReference/Texture2D.Apply.html">Apply()</a> function is called. This should
+      be done as <b>infrequently as possible.</b></p>
+    <p><b>Lines 19-21</b> actually don’t accomplish step 4 in the battle strategy. It turns out that it’s <b>easier to
+        build a brand new Sprite with the new texture</b>
+      than it is to update an existing Sprite’s texture. Line 19 defines the
+      new position and size of the sprite, (0, 0) and (nocabTex.width,
+      nocabTex.height) respectively. Line 20 defines what part of the
+      rectangle should hover over the (0, 0) point. Basically we want the
+      center of the sprite to be this important point, 50% the width, 50% the
+      height. Line 21 takes all this info and packs it into a new sprite
+      object using the <a href="https://docs.unity3d.com/ScriptReference/Sprite.Create.html">Create(...)</a> method.
+      Then we simply tell the sprite renderer to use this new sprite.</p>
+    <p>Lines 19-21 are annoying to write, so I built a <b>new static helper class</b> that can take care of it for me.
+    </p>
+    <br>
+    <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">using</span><span class="pln"> </span><span class="typ">System</span><span class="pun">.</span><span class="typ">Collections</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">System</span><span class="pun">.</span><span class="typ">Collections</span><span class="pun">.</span><span class="typ">Generic</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">PixelDrawer</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="typ">Sprite</span><span class="pln"> packTexture</span><span class="pun">(</span><span class="typ">Texture2D</span><span class="pln"> texture</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">Rect</span><span class="pln"> rect </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Rect</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> texture</span><span class="pun">.</span><span class="pln">width</span><span class="pun">,</span><span class="pln"> texture</span><span class="pun">.</span><span class="pln">height</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">Vector2</span><span class="pln"> piviot </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Vector2</span><span class="pun">(</span><span class="lit">0.5f</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.5f</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">Sprite</span><span class="pun">.</span><span class="typ">Create</span><span class="pun">(</span><span class="pln">texture</span><span class="pun">,</span><span class="pln"> rect</span><span class="pun">,</span><span class="pln"> piviot</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></mark></pre>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> nocabTest</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        
+    </span><span class="typ">Texture2D</span><span class="pln"> nocabTex </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Texture2D</span><span class="pun">(</span><span class="lit">32</span><span class="pun">,</span><span class="pln"> </span><span class="lit">32</span><span class="pun">);</span><span class="pln">
+    </span><span class="kwd">int</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">int</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+    nocabTex</span><span class="pun">.</span><span class="typ">SetPixel</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Color</span><span class="pun">.</span><span class="pln">black</span><span class="pun">);</span><span class="pln">
+
+    nocabTex</span><span class="pun">.</span><span class="pln">filterMode </span><span class="pun">=</span><span class="pln"> </span><span class="typ">FilterMode</span><span class="pun">.</span><span class="typ">Point</span><span class="pun">;</span><span class="pln">
+    nocabTex</span><span class="pun">.</span><span class="typ">Apply</span><span class="pun">();</span><span class="pln">  </span><span class="com">// Expensive, do only at the end</span><span class="pln">
+
+    </span><mark><span class="pln">sr</span><span class="pun">.</span><span class="pln">sprite </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PixelDrawer</span><span class="pun">.</span><span class="pln">packTexture</span><span class="pun">(</span><span class="pln">tex</span><span class="pun">);</span></mark><span class="pln">
+</span><span class="pun">}</span></pre>
+    <br>
+    <p>Let’s add a Start() function and make a SpriteRenderer object in our scene and see what the code does does.</p>
+    <br>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> scratch </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">SpriteRenderer</span><span class="pln"> sr</span><span class="pun">;</span><span class="pln">
+
+    </span><mark><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        nocabTest</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">}</span></mark><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> nocabTest</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">Texture2D</span><span class="pln"> nocabTex </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Texture2D</span><span class="pun">(</span><span class="lit">32</span><span class="pun">,</span><span class="pln"> </span><span class="lit">32</span><span class="pun">);</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">int</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">;</span><span class="pln">
+        nocabTex</span><span class="pun">.</span><span class="typ">SetPixel</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Color</span><span class="pun">.</span><span class="pln">black</span><span class="pun">);</span><span class="pln">
+
+        nocabTex</span><span class="pun">.</span><span class="pln">filterMode </span><span class="pun">=</span><span class="pln"> </span><span class="typ">FilterMode</span><span class="pun">.</span><span class="typ">Point</span><span class="pun">;</span><span class="pln">
+        nocabTex</span><span class="pun">.</span><span class="typ">Apply</span><span class="pun">();</span><span class="pln">  </span><span class="com">// Expensive, do only at the end</span><span class="pln">
+
+        sr</span><span class="pun">.</span><span class="pln">sprite </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PixelDrawer</span><span class="pun">.</span><span class="pln">packTexture</span><span class="pun">(</span><span class="pln">tex</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></pre>
+    <br>
+    <img class="center" src="UnityPixelArtPoint_files/CenterPoint.PNG">
+    <br>
+
+    <p>We can now draw a single point! Huzza! We conquered the point, next the line, then the circle, and finally the
+      world...</p>
+    <hr class="line">
+    <p>But there’s one last thing to know about Unity Texture2D pixel art. The point <b>(0, 0) is the bottom left</b>
+      with positive x going left, and positive y going up. For more
+      experienced programmers, you may be used to (0, 0) being the top left
+      point of the sprite but unfortunately I don’t make the rules. At least
+      the <b>Texture2D is 0 indexed.</b></p>
+    <br>
+    <p>Change x and y to be 0 and see where the point is drawn.</p>
+
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> nocabTest</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="typ">Texture2D</span><span class="pln"> nocabTex </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Texture2D</span><span class="pun">(</span><span class="lit">32</span><span class="pun">,</span><span class="pln"> </span><span class="lit">32</span><span class="pun">);</span><span class="pln">
+  </span><mark><span class="kwd">int</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></mark><span class="pln">
+  </span><mark><span class="kwd">int</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></mark><span class="pln">
+    nocabTex</span><span class="pun">.</span><span class="typ">SetPixel</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Color</span><span class="pun">.</span><span class="pln">black</span><span class="pun">);</span><span class="pln">
+
+    nocabTex</span><span class="pun">.</span><span class="pln">filterMode </span><span class="pun">=</span><span class="pln"> </span><span class="typ">FilterMode</span><span class="pun">.</span><span class="typ">Point</span><span class="pun">;</span><span class="pln">
+    nocabTex</span><span class="pun">.</span><span class="typ">Apply</span><span class="pun">();</span><span class="pln">  </span><span class="com">// Expensive, do only at the end</span><span class="pln">
+
+    sr</span><span class="pun">.</span><span class="pln">sprite </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PixelDrawer</span><span class="pun">.</span><span class="pln">packTexture</span><span class="pun">(</span><span class="pln">tex</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></pre>
+    <br>
+    <img class="center" src="UnityPixelArtPoint_files/ZeroPoint.PNG">
+    <br>
+    <hr class="line">
+    <p>The last important thing to note about pixel art is that the <b>Texture2D “wraps”</b>,
+      in other words the moving off the edge of the canvas texture will cause
+      the point be drawn on the other side of the texture. Consider the
+      drawn point (-1, -1):</p>
+    <br>
+    <img class="center" src="UnityPixelArtPoint_files/WrappedPoint.PNG">
+    <br>
+    <hr class="line">
+    <p>With this understanding we can now overengineer the ability to draw a line.</p>
+    <br class="large">
+
+  </div> <!-- END NARROW CONTENT -->
+
+
+</body>
+
+</html>

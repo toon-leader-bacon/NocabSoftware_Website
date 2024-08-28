@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+
+
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+
+  <div class="container-narrow prettyprint">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <hr class="line">
+    <h3><b>Example of setting Unity Button onClick() funciton in code:</b></h3>
+    <pre class="prettyprint prettyprinted" style=""><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="pln">UI</span><span class="pun">;</span><span class="pln">  </span><span class="com">// &lt;-- This line is needed for access to the Button type</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabOnClick</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">Button</span><span class="pln"> otherButton</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> number</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// This MonoBehaviour must be attached to an GameObject that already has a Button Component.</span><span class="pln">
+        </span><span class="com">// But the general technique still works on any Button Object</span><span class="pln">
+        </span><span class="typ">Button</span><span class="pln"> myButton </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="typ">GetComponent</span><span class="pun">&lt;</span><span class="typ">Button</span><span class="pun">&gt;();</span><span class="pln">
+
+        myButton</span><span class="pun">.</span><span class="pln">onClick</span><span class="pun">.</span><span class="typ">AddListener</span><span class="pun">(</span><span class="kwd">delegate</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> doWork</span><span class="pun">();</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+        otherButton</span><span class="pun">.</span><span class="pln">onClick</span><span class="pun">.</span><span class="typ">AddListener</span><span class="pun">(</span><span class="kwd">delegate</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> doWork</span><span class="pun">();</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+
+        </span><span class="com">// Changing this.number variable will pass the new value into the function at the next click event</span><span class="pln">
+        myButton</span><span class="pun">.</span><span class="pln">onClick</span><span class="pun">.</span><span class="typ">AddListener</span><span class="pun">(</span><span class="kwd">delegate</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> complexAction</span><span class="pun">(</span><span class="pln">number</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> doWork</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="str">"Simple on click action"</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> complexAction</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> n</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">bool</span><span class="pln"> b</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">b</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="str">"True work"</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+        </span><span class="kwd">else</span><span class="pln">   </span><span class="pun">{</span><span class="pln"> </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="str">"False work"</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+        </span><span class="kwd">for</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> n</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="str">"Doing loop work: "</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> i</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+  </span></pre>
+    <hr class="line">
+    <h3><b>Breif description:</b></h3>
+
+    <p>A unity Button MonoBehavior allows for a single mouse click to run
+      arbitrary code. This is ideal for most kinds of user interfaces because
+      it can be computationally less intensive, compared to an if statement in
+      the Update() function.</p>
+    <p>However, setting up Button MonoBehavior with the Unity editor is tedious, error prone and inflexable.</p>
+    <p>Setting up a Button via scripting is fairly easy. Using a script is
+      also the easiest way to make a Unity Button onClick() function take
+      arguments. These arguments can be constants hardcoded in, or variables
+      that can be changed while the game is running.</p>
+
+    <p>More information and examples can be found on the Unity <a
+        href="https://docs.unity3d.com/ScriptReference/UI.Button-onClick.html">documentation</a>.</p>
+
+    <p>A few gotchas:</p>
+    <ul>
+      <li>
+        <pre class="prettyprint prettyprinted"
+          style=""><span class="kwd">using</span><span class="pln"> </span><span class="typ">UnityEngine</span><span class="pun">.</span><span class="pln">UI</span><span class="pun">;</span></pre>
+      </li>
+      <li>Generally you want to use onClick.AddListener(...) instead of overriding the existing onClick reference.</li>
+      <li>The example script must be attached to a MonoBehavior object that already has/ is a Button.</li>
+    </ul>
+
+    <br class="large">
+  </div> <!-- END NARROW CONTENT -->
+
+
+</body>
+
+</html>

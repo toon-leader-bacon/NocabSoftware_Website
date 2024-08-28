@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+	<link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+	<link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+	<link rel="stylesheet" type="text/css"
+		href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav> <!-- End of navbar -->
+
+    <!-- Game design has different fonts -->
+    <div class="game-design">
+      <h3>Complexity, Difficulty and Challenge in Single Player Games</h3>
+      <p>Difficulty in games we <a href="https://nocabsoftware.com/src/game_design/Difficulty.html">previously</a>
+        defined as variable sliders or smarter AI. In summary, to make the game
+        more of a challenge either provide the computer player with more
+        resources (variable sliders) or use the resources more effectively
+        (smarter AI).</p><br>
+      <p>However, I want to introduce the idea of “complexity” in the context of game challenge.</p><br>
+
+      <p><mark>Complexity is the number of mechanics, or underlying numbers needed to understand the game.</mark>
+        In simple terms, complex games are hard to learn. For example Dwarf
+        Fortress, most Paradox games, Warhammer 40k are all complex games
+        because they have so many moving interconnected parts. Grand Strategy
+        games, or simulation games like the Sims are usually very complex. Non
+        complex games are like Tetris, or checkers, or some classic board games
+        like Scrabble or Monopoly. Simple games usually only have a few
+        affordances or mechanics that the player can do. In Tetris, the blocks
+        fall and you move and rotate them. That’s it. The challenge of the game
+        comes from “hp sliders” like speed of the blocks or type of blocks that
+        fall. But every block follows the same rules. In checkers every piece
+        moves in the same way (except the king pieces after getting to the other
+        end of the board). Chess on the other hand, a more complex board game,
+        has several different pieces each with their own set of movement rules. <mark>In complex games the challenge
+          comes primarily from trying to understand what is going on.</mark></p><br>
+
+      <p>So, what does adding complexity do to the game experience?
+        Specifically, does complexity help us answer our guiding question of
+        “How can we make a game more challenging?”</p><br>
+
+      <p>Think of complexity like a set of tools. <mark>Complex games have lots of specific, sophisticated and maybe
+          dangerous tools.</mark>
+        While new players are intimidated by the tool set and don’t know what
+        to do with it all, experienced players can take the tools and build a
+        “better” game experience (In this case better means easier wins for the
+        player). So complexity does impact the challenge of the game. But it’s a
+        different impact depending on how experienced the player is. <mark>More
+          complexity for an experienced player will make the game easier because
+          they have more tools to use. While less complexity will make a game
+          easier for new players.</mark></p><br>
+
+      <p>So, complexity and difficulty both affect the challenge of a game.
+        Now, I haven’t introduced the term challenge, but it’s hard to define
+        the difference between challenge and difficulty without an understanding
+        of complexity. <mark>Challenge is the overall effort needed to win a game, including complexity and
+          difficulty.</mark></p><br>
+
+      <p>A few examples, let’s consider chess. To make a game less complex we
+        remove some mechanics or underlying statistics of the game.To make chess
+        less complex let's replace the knight with another castle. The knight
+        piece is the only piece that can hop over other pieces, and it moves in a
+        unique L shape. This makes it a relatively complex piece, compared to
+        the castle which only moves in straight lines and can’t hop. Removing
+        the knight completely also removes the mechanic of hopping pieces
+        because no other piece has that ability. What does this change do to the
+        challenge of the game? Well, for more experienced players you’re
+        removing a key offensive piece. A lot of strategies are now completely
+        invalid without the knight, and while I’m not a chess expert myself, for
+        the sake of example I’ll just claim that removing the piece from the
+        game would make it relatively more difficult for a player that’s used to
+        playing with the knight. But for in-experienced players they no longer
+        have to worry about a piece jumping over their carefully set up
+        defences.</p><br>
+
+      <p>Let’s go back to our question of “How can we make a game more challenging?”. Now we have a few tools to answer
+        this</p><br>
+      <ol>
+        <li>Up the difficulty of the game
+          <ul>
+            <li> Increase the enemy HP sliders
+            </li>
+            <li> Increase the enemy artificial intelligence
+            </li>
+          </ul>
+        </li>
+        <li>Mess with the complexity of the game
+          <ul>
+            <li> If you’re making it harder for new players add complexity
+            </li>
+            <li> If you’re making it harder for experienced players remove complexity
+            </li>
+          </ul>
+        </li>
+      </ol><br>
+
+
+      <p>The strategy you should use for your game depends on the game and is
+        entirely up to the designer to figure out what strategy is best.</p><br>
+      <br class="large">
+      <br class="large">
+    </div> <!-- End game design text type -->
+  </div> <!-- End of container-narrow  All stuff should be in this div-->
+
+</body>
+
+</html>

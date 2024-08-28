@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+
+    <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+    <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+
+    <div class="container-narrow">
+        <h1>NocabSoftware.com</h1>
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+                        <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+                        <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+                        <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <hr class="line">
+        <h3><b>For those who've been here before:</b></h3>
+
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">using</span><span class="pln"> </span><span class="typ">LightJson</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">JsonConvertible</span><span class="pln">  </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">// NOTE: all JsonConvertable functions are virtual or abstract.</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="kwd">string</span><span class="pln"> abstractData</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractLoadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">virtual</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Take data from this abstract class and convert to JsonObject</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+        </span><span class="com">// Convert the rest of this class into a JO</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> abstractLoadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO: Validate the Json before loading</span><span class="pln">
+        </span><span class="com">// Take the data from the JO and load it into this abstract class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">(</span><span class="str">"random Data"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">].</span><span class="typ">AsJsonObject</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">/*  Order of events
+         * 1) An ExampleNocabInherit is created via 'new ExampleNocabInherit(jo);'
+         * 2) Base class constructor is called
+         * 2.1) Base constructor runs the abstractLoadJson() function
+         * 3) This class loads its own data from the JO
+         */</span><span class="pln">
+
+        </span><span class="com">// The base class is already loaded, so only load data for this child class</span><span class="pln">
+        loadJsonThis</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">override</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Convert the base abstract class into a JO</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">();</span><span class="pln">
+        </span><span class="com">// Convert the rest of this class into a JO</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJsonBase</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> baseJO</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">.</span><span class="pln">abstractLoadJson</span><span class="pun">(</span><span class="pln">baseJO</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJsonThis</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln">     </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Load data from the JO into this class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">override</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+        </span><span class="com">// Load the base class first</span><span class="pln">
+        loadJsonBase</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]);</span><span class="pln">
+
+        </span><span class="com">// Load the rest of the data from the JO into this class</span><span class="pln">
+        loadJsonThis</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        <hr class="line">
+        <h3><b>For the rest of us:</b></h3>
+
+        <p>This tutorial builds upon the code discussed in the previous post found here <a
+                href="https://nocabsoftware.com/src/programming/Json1.html">Data Persistence 1: JSON Introduction</a>.
+            Please refer to the code dump at the bottom of that post to quickly get up to speed.</p>
+        <p>I’m using <b>a library called LightJson created by MarconLopezC found <a
+                    href="https://github.com/MarcosLopezC/LightJson">here</a></b>. To add this to your Unity project,
+            first <b>check the license</b>,
+            then click the "Clone or download" button and "Download ZIP". Unzip the
+            package and copy the license, Readme, and cs files into your Unity
+            project assets folder.</p>
+        <p>The previous post showed that converting a simple class into JSON
+            is possible. However, before scaling up this process to many different
+            types of objects or more complex classes, a <b>standardized interface should enforced</b>.
+            I wanted to capture the behavior demonstrated previously in a single
+            interface so as I move forward I can easily make any class “JSON-able”,
+            or have the ability to be converted into JSON.</p>
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">using</span><span class="pln"> </span><span class="typ">LightJson</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">using</span><span class="pln"> </span><span class="typ">System</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">JsonConvertible</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">/**
+     * A JsonConvertable object is an object that can convert itself into a JsonObject,
+     * and ingest a well-formatted JsonObject and update itself to match.
+     *
+     * In other words, the JsonConvertable interface allows objects to save and load themselves.
+     *
+     * In general, the output of toJson() function should capture 100% of the state stored in
+     * the object. The format of the outputted JsonObject from the toJson() function, should be
+     * valid input for the loadJson(...) function. That is to say, this.loadJson(this.toJson())
+     * should produce  no errors and result in no state changes (a no-op).
+     */</span><span class="pln">
+    </span><span class="com">// TODO: Separate out the load and save functionality?</span><span class="pln">
+
+    </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">();</span><span class="pln">
+
+    </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        <br>
+        <p>This <b>JsonConvertible interface</b> is simple and only captures <b>two
+                functions. One will convert the implementing object into JSON, and the
+                other will accept and load the data from an inputted JsonObject into the
+                implementing object</b>.</p>
+        <p>Let’s use this new interface to update ExampleNocabChild class created previously.</p>
+        <br>
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">JsonConvertible</span><span class="pln">  </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">)</span><span class="pln">  </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+    </span><mark><span class="pln">loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span></mark><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+
+        </span><span class="com">// Convert/ add this class's data into a JO</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><mark><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+        </span><span class="com">// Load the data from the JO into this class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span></mark><span class="pln">
+</span><span class="pun">}</span></pre>
+        <p>Notice that the constructor now takes in a JsonObject and simply passes it to the new loadJson(...) function.
+            This hints at a <b>design problem associated with the interface</b>
+            approach. While on the positive side, the interface will help
+            standardize and streamline future development, it also introduces some
+            challenges. <b>The loadJson(...) function kinda acts like a constructor</b>
+            itself, taking in data and producing a specific instance of
+            ExampleNocabChild. Ideally, the interface could force children classes
+            to create a specific constructor that takes in a JsonObject, but it
+            can’t do that. This loadJson(...) function has to be public, so <i>anything</i> will be able to override an
+            existing ExampleNocabChild object by inputting a new JsonObject. This is a <b>major security problem, and
+                opens the door to crazy weird bugs, but also presents an opportunity to implement an <a
+                    href="https://en.wikipedia.org/wiki/Object_pool_pattern">object pooling design pattern.</a></b> Be
+            very careful every time you call the loadJson(...) function. With great power comes great responsibility.
+        </p>
+        <p>Additionally, in order to load Json into an object, the object must
+            already be constructed. You can’t call a function on an object that
+            hasn’t been instantiated yet. To work around this second design problem,
+            I’ve updated the constructor so it takes in a JsonObject and it simply
+            passes the it to the loadJson(...) function. <b>The interface can’t enforce this constructor, but I strongly
+                recommend it.</b></p>
+        <br>
+
+        <hr class="line">
+        <h3>Now let's mess things up.</h3>
+        <p>Let’s <b>add in an interface and abstract class to the inheritance hierarchy</b>.
+            I want to enforce that all inheritors of this new interface are also a
+            JsonConvertible, so my new ExampleNocabInterface will extend the
+            JsonConvertible interface.</p>
+        <pre class="prettyprint prettyprinted" style=""><mark><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">JsonConvertible</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span></mark><span class="pln">
+
+</span><mark><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span></mark><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><mark><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span></mark><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><mark><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">()</span></mark><span class="pln">  </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><mark><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">()</span></mark><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="pun">...</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+        <p>Notice how the abstract class currently has a compile time error
+            because it does not define the required functions from the interface.
+            Let’s fix that by <b>following the procedure outlined above</b> for the
+            ExampleNocabChild when it implemented the JsonConvertible. I’ll also
+            throw in some simple data to make this example a little more realistic:</p>
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><mark><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="kwd">string</span><span class="pln"> abstractData</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+        </span><span class="com">// Convert this class into a JO</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO: Validate the Json before loading</span><span class="pln">
+        </span><span class="com">// Take the data from the JO and load it into this abstract class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span></mark><span class="pln">
+</span><span class="pun">}</span></pre>
+
+        <br class="large">
+        <p>Nothing new so far, just repeating the process from ExampleNocabChild. However, <b>I introduced a bug. Take a
+                moment and try to find it yourself first.</b> Feel free to run the code yourself and create any kind of
+            tester methods. To find it, you will need to <b>consider how all the current code works together</b>.</p>
+        <br class="large">
+        <hr class="line">
+        <p>If you found it, good job. But for the rest of us let’s consider
+            the following test example. Update the NocabTester MonoBehavior with the
+            following code.</p>
+        <p>Running this code produces the following results in the Unity Console.</p>
+
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabTester</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><mark><span class="pln">        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testChild </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> testAbstract </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">2</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">ExampleNocabInterface</span><span class="pln"> testInterface </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">3</span><span class="pun">);</span><span class="pln">
+        
+
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testChild</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">());</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testAbstract</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">());</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testInterface</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">());</span></mark><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></pre>
+        <img class="center" src="Json2_files/JsonTestLogBug1.PNG">
+
+        <br>
+        <br>
+
+        <p>Well there seems to be quite a few bugs in the current code. As you
+            can see, casting the ExampleNocabChild as its parent abstract class or
+            interface seems to override the child’s toJson() function. Moreover, <b>the
+                child class toJson() function loses the abstract class’s data, while
+                the interface and abstract class loose the child class’s data.</b></p>
+        <br>
+        <p>This bug can be partly fixed by <b>updating the child toJson() function so that it also considers the base
+                abstract class.</b>
+            Here, I decided to leverage the already existing base.toJson() function
+            and encapsulate it in the child’s JSON object. Additionally, any
+            changes to the toJson() function should also be mirrored in the
+            loadJson(...) function. In this way, the child class doesn’t have to
+            know how the base class saves or loads the JSON data. The child class
+            simply acts as a passthrough. Kinda like two way implementation hiding, <b>neither the parent nor child know
+                how the other saves or loads data.</b></p>
+
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln">  </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+
+        </span><mark><span class="com">// Convert the base abstract class into a JO</span></mark><span class="pln">
+        </span><mark><span class="pln">result</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">();</span></mark><span class="pln">
+
+        </span><span class="com">// Convert/ add this class's data into a JO</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+        </span><mark><span class="com">// Load the base class first</span></mark><span class="pln">
+        </span><mark><span class="kwd">base</span><span class="pun">.</span><span class="pln">loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]);</span></mark><span class="pln">
+
+        </span><span class="com">// Load the data from the JO into this class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></pre>
+        <br>
+        <p>I re-run the above test and see that this fix does allow for the
+            child.toJson() function to capture the data from the parent abstract
+            class.</p>
+        <img class="center" src="Json2_files/JsonTestLogBug2.PNG">
+        <br>
+        <hr class="line">
+        <h3>Now to fix the interface and abstract class problem.</h3>
+        <br>
+        <p>My IDE gives me a little hint. Squiggly green lines warn me that
+            ExampleNocabChild.toJson() function hides inherited member
+            ExampleNocabAbstract.toJson(). It recommends that I <b>use the “new” keyword</b>, so lets try it.</p>
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln">  </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="pun">...</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><mark><span class="kwd">new</span></mark><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="pun">...</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><mark><span class="kwd">new</span></mark><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="pun">...</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+        <img class="center" src="Json2_files/JsonTestLogBug3.PNG">
+        <br>
+        <p><b>That did absolutely nothing.</b> The first result for the search of “c# new keyword” produces a microsoft
+            documentation page called <a
+                href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/knowing-when-to-use-override-and-new-keywords">Knowing
+                When to Use Override and New Keywords</a>. I’ll spare you the details but in short, the <b>“override”
+                keyword is needed to solve this problem.</b></p>
+        <br>
+        <p>I’ll update the code and try it.</p>
+
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    
+    </span><span class="kwd">public</span><span class="pln"> </span><mark><span class="kwd">virtual</span></mark><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="pun">...</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><mark><span class="kwd">virtual</span></mark><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="pun">...</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln">  </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><mark><span class="kwd">override</span></mark><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="pun">...</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><mark><span class="kwd">override</span></mark><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="pun">...</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></pre>
+
+        <img class="center" src="Json2_files/JsonTestLogBug4.PNG">
+        <br>
+        <p><b>Success! But the bug hunting isn’t over.</b> This fix comes with
+            a cost. In C#, the virtual and override keywords act in unusual ways.
+            Additional testing is needed, specifically for the loadJson(...)
+            functionality. Consider the following code changes, debug logs and test
+            example:</p>
+        <br>
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabTester</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><mark><span class="pln">        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testA </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">5</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> jo </span><span class="pun">=</span><span class="pln"> testA</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">.</span><span class="typ">ToString</span><span class="pun">());</span><span class="pln">
+        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testB </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testB</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">().</span><span class="typ">ToString</span><span class="pun">());</span></mark><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><mark><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">jo </span><span class="pun">!=</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="str">"Abstract constructor, Json is NOT null!"</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span></mark><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="pun">...</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">virtual</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO: Validate the Json before loading</span><span class="pln">
+        </span><mark><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">jo </span><span class="pun">==</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">LogError</span><span class="pun">(</span><span class="str">"Abstract loadJson,     Json IS null!"</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span></mark><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln">  </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+    
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">(</span><mark><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">].</span><span class="typ">AsJsonObject</span></mark><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+        loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        <br>
+        <p>In the ExampleNocabChild, I updated the JsonObject constructor to
+            hand over the part of the JSON object that ExampleNocabAbstract is
+            expecting. Some of you may see where the bug is now (and if so you are
+            truly a god/dess and should ask your boss for a raise. It took me a long
+            time to find), but for the rest of us <b>consider the Tester
+                Monobehavior. It converts a child object into JSON, then attempts to
+                load that JSON into a different instance of ExampleNocabChild.</b> The debug statements in
+            ExampleNocabAbstract are simply to illustrate this very unique looking bug:</p>
+        <br>
+        <img class="center" src="Json2_files/JsonTestLogBug5.PNG">
+        <br>
+        <p>Somehow, the JSON object that was given to the abstract class went from being NOT null, to <i>being</i> null.
+            It seems that the act of <b>passing
+                the JSON object between the ExampleNocabAbstract constructor and
+                ExampleNocabAbstract.loadJson(...) function somehow corrupted it</b>. The stack trace in the above
+            console log shows exactly what the problem is. I’ll redo the code and input <b>markings for each of the 5
+                lines in the stacktrace.</b></p>
+        <br>
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">NocabTester</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">MonoBehaviour</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Start</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">ExampleNocabChild</span><span class="pln"> testA </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="lit">5</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> jo </span><span class="pun">=</span><span class="pln"> testA</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">.</span><span class="typ">ToString</span><span class="pun">());</span><span class="pln">
+</span><mark><span class="com">/*1*/</span></mark><span class="pln">   </span><span class="typ">ExampleNocabChild</span><span class="pln"> testB </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+        </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="pln">testB</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">().</span><span class="typ">ToString</span><span class="pun">());</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">jo </span><span class="pun">!=</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">Log</span><span class="pun">(</span><span class="str">"Abstract constructor, Json is NOT null!"</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><mark><span class="com">/*3*/</span></mark><span class="pln">   </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">virtual</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO: Validate the Json before loading</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">jo </span><span class="pun">==</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="typ">Debug</span><span class="pun">.</span><span class="typ">LogError</span><span class="pun">(</span><span class="str">"Abstract loadJson,     Json IS null!"</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><mark><span class="com">/*5*/</span></mark><span class="pln">   </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln">  </span><span class="pun">{</span><span class="pln">
+      </span><span class="pun">...</span><span class="pln">
+</span><mark><span class="com">/*2*/</span></mark><span class="pln"> </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">].</span><span class="typ">AsJsonObject</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+          loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">...</span><span class="pln">
+      </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">override</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+          </span><span class="com">// Load the base class first</span><span class="pln">
+</span><mark><span class="com">/*4*/</span></mark><span class="pln">     </span><span class="kwd">base</span><span class="pun">.</span><span class="pln">loadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]);</span><span class="pln">
+
+          </span><span class="com">// Load the data from the JO into this class</span><span class="pln">
+          </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+        <p>It turns out, the override keyword seems to change the expected behavior of the “this” keyword. At
+            <mark>point 3</mark> in the above code, <b>the child loadJson(...) function is called, not the abstract
+                parent’s loadJson(...) function.</b> Then, <mark>point 4</mark> in the code tries to extract the “Base”
+            out of the JSON, which is a problem because <mark>point 2</mark> already did the extraction. So, the JSON
+            that arrives at <mark>point 5</mark> will be null. There’s the bug, what’s the best way to fix it?</p>
+        <p>In theory at <mark>point 2</mark> (in the child constructor), we
+            could pass the entire JsonObject to the base constructor, which will
+            then pass it back into the child loadJson(...) function, which then
+            splits it up and passes the base back into the parent abstract class.
+            But that seems... inelegant to me. I don’t want to trust that the parent
+            abstract class will do the right thing in order to load the child
+            class. <b>I want each to be entirely responsible for themselves.</b> I will admit that <b>the solution</b>
+            that ended up using is not very elegant either and <b>involves creating some internal loading helper
+                functions</b>.
+            I justify this by telling myself that the functionality of loading data
+            into a single class is different than the functionality of passing data
+            into the base class, which is different from loading data into the
+            entire class hierarchy. It’s contrived, but it works as shown below.</p>
+
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><mark><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractLoadJsonHelper</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span></mark><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><mark><span class="pln">    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> abstractLoadJsonHelper</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO: Validate the Json before loading</span><span class="pln">
+        </span><span class="com">// Take the data from the JO and load it into this abstract class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span></mark><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><mark><span class="kwd">abstract</span></mark><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><mark><span class="pun">;</span></mark><span class="pln">
+
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln">  </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">].</span><span class="typ">AsJsonObject</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+        </span><mark><span class="pln">loadJsonThisHelper</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span></mark><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    
+    </span><span class="pun">...</span><span class="pln">
+
+</span><mark><span class="pln">    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJsonThisHelper</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+        </span><span class="com">/* Load data from the JO into this class */</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span></mark><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">override</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+        </span><span class="com">// Load the base class first</span><span class="pln">
+        </span><mark><span class="kwd">base</span><span class="pun">.</span><span class="pln">abstractLoadJsonHelper</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]);</span></mark><span class="pln">
+
+        </span><span class="com">// Load the data from the JO into this class</span><span class="pln">
+        </span><mark><span class="kwd">this</span><span class="pun">.</span><span class="pln">loadJsonThisHelper</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span></mark><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+        <br>
+        <p>Dividing the functionality up in these helper functions allows for <b>more persice control over what
+                functions get called when.</b>
+            For example, the ExampleNocabChild constructor can pass the parent's
+            part of the JSON data to be loaded, then only load data into itself.
+            There is no need do run the normal interface loadJson(...) function
+            because that will update the parent class again.</p>
+        <p>Running the test one final time produces the expected results. <b>The
+                child and parent abstract class can be converted into JSON, and that
+                JSON can be loaded back into a new (or exiting) class to update the
+                child and parent.</b></p>
+
+
+        <hr class="line">
+
+        <br>
+        <h3>Code Dump:</h3>
+
+        <pre class="prettyprint prettyprinted" style=""><span class="kwd">using</span><span class="pln"> </span><span class="typ">LightJson</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">JsonConvertible</span><span class="pln">  </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">// NOTE: all JsonConvertable functions are virtual or abstract.</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabInterface</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="kwd">string</span><span class="pln"> abstractData</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractLoadJson</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">virtual</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Take data from this abstract class and convert to JsonObject</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+
+        </span><span class="com">// Convert the rest of this class into a JO</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> abstractData</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">protected</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> abstractLoadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO: Validate the Json before loading</span><span class="pln">
+
+        </span><span class="com">// Take the data from the JO and load it into this abstract class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">abstractData </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"abstractData"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">abstract</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ExampleNocabAbstract</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">(</span><span class="str">"random Data"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ExampleNocabChild</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">].</span><span class="typ">AsJsonObject</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">/*  Order of events
+         * 1) An ExampleNocabInherit is created via 'new ExampleNocabInherit(jo);'
+         * 2) Base class constructor is called
+         * 2.1) Base constructor runs the abstractLoadJson() function
+         * 3) This class loads its own data from the JO
+         */</span><span class="pln">
+
+        </span><span class="com">// The base class is already loaded, so only load data for this child class</span><span class="pln">
+        loadJsonThis</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">override</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pln"> toJson</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Convert the base abstract class into a JO</span><span class="pln">
+        </span><span class="typ">JsonObject</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">JsonObject</span><span class="pun">();</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">.</span><span class="pln">toJson</span><span class="pun">();</span><span class="pln">
+
+        </span><span class="com">// Convert the rest of this class into a JO</span><span class="pln">
+        result</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> result</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJsonBase</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> baseJO</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">base</span><span class="pun">.</span><span class="pln">abstractLoadJson</span><span class="pun">(</span><span class="pln">baseJO</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJsonThis</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln">     </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Load data from the JO into this class</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> jo</span><span class="pun">[</span><span class="str">"data"</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">override</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> loadJson</span><span class="pun">(</span><span class="typ">JsonObject</span><span class="pln"> jo</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// TODO Validate the JO before loading</span><span class="pln">
+
+        </span><span class="com">// Load the base class first</span><span class="pln">
+        loadJsonBase</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">[</span><span class="str">"Base"</span><span class="pun">]);</span><span class="pln">
+
+        </span><span class="com">// Load the rest of the data from the JO into this class</span><span class="pln">
+        loadJsonThis</span><span class="pun">(</span><span class="pln">jo</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+
+        <hr class="line">
+        <br class="large">
+    </div> <!-- END NARROW CONTENT -->
+
+
+</body>
+
+</html>
