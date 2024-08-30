@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="grey-bg">
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/lit_review/index.html">Lit Review</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav> <!-- End of navbar -->
+
+    <!-- Game design has different fonts -->
+    <div class="game-design">
+      <h3>ImageNet: A Large-Scale Hierarchical Image Database</h3>
+
+      <p>Published in IEEE Micro in 2016, the <a href="https://ieeexplore.ieee.org/document/5206848">Image Net: A
+          Large-Scale Hierarchical Image Database</a> paper was a major step forward in computer vision. Largely
+        inspired by work on the related <a href="https://ieeexplore.ieee.org/book/6267389">WordNet</a> project, the
+        ImageNet authors developed <mark>a database of labeled images</mark>.</p>
+      <p>
+        The <mark>hierarchical structure</mark> comes from the relationship between each of the labels, typically using
+        the ‘is-a’
+        relation to form the branches between labels. These is-a relationships are further organized in an acyclic tree
+        structure. A primary example used in the paper is that of the “mammal” to “husky” path:
+      </p><br>
+
+      <p>Mammal → placental → carnivore → canine → dog → working dog → Husky</p><br>
+
+      <p>As can clearly be seen, each layer deeper in this path is more specific, but also is-a instance of all labels
+        above it. A husky is-a dog, and a dog is-a mammal.</p>
+
+      <p><mark>All images are held at the leaf labels</mark>, but this relationship structure allows for easily
+        collecting all images
+        at any node level, simply by collecting all images in all descendants. Collecting all carnivore images will
+        include all canine, feline, ursa, orcinus, etc.</p>
+
+      <p>While some terms may have a large branching factor others naturally may not. For example, the canine sub-tree
+        may have a very large number of distinct leaf nodes, each of which contains 500 to 1000 distinct images allowing
+        for a good spread of diverse data. However, a less naturally diverse sub tree like “Bovidae”, the scientific
+        family name that includes cattle, may not have as many diverse nodes. While the authors of ImageNet do provide
+        some cherry picked examples when comparing their hierarchies to other comparable image hierarchy databases, the
+        branching factor explicitly is not provided. <mark>This diversity issue may be problematic for higher order
+          labels skewing the label’s data towards an example that may have high diversity of sub labels</mark>. For
+        example, consider the carnivore tag which may contain dozens of dog leaf nodes, one for each breed, but
+        comparatively fewer bears.
+      </p>
+      <br>
+      <p>However, this potential lack of branching factor distribution is countered by the diversity of each leaf node
+        image collection. The authors target for each synset to contain 500 to 1000 images of a disambiguated instance.
+        To promote diversity of image type, they employ a unique measurement for each synset: The authors compute the
+        pixel level average for every image in the synset, convert the result to a lossless JPEG file, and measure the
+        file size. JPEG file types are naturally self compressing, so a perfectly even gray image will have a relatively
+        small file size compared to a JPEG image that has many sharp details. So a smaller JPEG file size means the
+        average synset image is evenly gray, meaning that each image in the synset is visually distinct from each other
+        image.</p>
+
+      <p>In simple terms: the file size is inversely proportional to the image distribution. <mark>A smaller pixel
+          average JPEG file means the synset contains many images with distinct backgrounds, poses, orientations,
+          etc.</mark></p>
+
+      <p>Image diversity is difficult to measure, but this is an effective and, importantly, easy metric to calculate
+        and quantify.</p>
+      <p>Perhaps one of the largest contributions ImageNet has provided to modern ML development is the sheer size of
+        the dataset. Data diversity is important, but so is size. The original paper offers 5247 synsets and 3.2 million
+        images in total. As of 2024, the ImageNet website boasts 21,841 synsets and over 14 million images. <mark>The
+          original 3.2 million images offer a 99.7% label precision</mark>, meaning that if an ImageNet image is labeled
+        as “Husky”, or “dog” or “mammal” there is a 99.7% chance that label is correct. This precision is impressive,
+        especially because the majority of these labels were provided by a Mechanical Turk service, <mark>effectively
+          citizen
+          scientist labeling</mark> as opposed to domain expert labeling.</p>
+
+      <p>With a dataset of this size, equality and diversity a lot of computer vision systems can be trained or
+        benchmarked. Many different sub problems can be considered including image labeling, box bounding, image
+        generation, or new problems that have not been considered before. While this paper, and my literature review
+        article, focus mainly on the development of the dataset itself, the authors and I are excited to see what
+        possible research will develop off of this resource.</p>
+
+      <br class="large">
+      <br class="large">
+    </div> <!-- End game design text type -->
+  </div> <!-- End of container-narrow  All stuff should be in this div-->
+
+</body>
+
+</html>
