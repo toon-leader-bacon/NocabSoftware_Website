@@ -11,6 +11,22 @@
     href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <style>
+    .image-gallery {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .image-gallery figure {
+      text-align: center;
+    }
+
+    .image-gallery img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 
 <body class="grey-bg">
@@ -79,7 +95,8 @@
 
       <br>
       <h3>Further Reading</h3>
-      <p>Deep learning models are effective at classifying data, especially tasks such as labeling images. <a href="https://huggingface.co/microsoft/resnet-50">ResNet</a>
+      <p>Deep learning models are effective at classifying data, especially tasks such as labeling images. <a
+          href="https://huggingface.co/microsoft/resnet-50">ResNet</a>
         is a notable example here, representing near state of the art in
         accuracy, and near human performance. However, these models are not perfect, and falter when presented corrupted
         images. The exact process by which a complex model like ResNet considers an image and produces a label is not
@@ -134,16 +151,10 @@
           <figcaption class="caption">Unmodified (0% blending)</figcaption>
         </figure>
         <figure class="item">
-          <img src="../../img/lit_review/GATTCA/Gen9_10%.jpg">
+          <img src="../../img/lit_review/GATTCA/Gen9_10.jpg">
           <figcaption class="caption">Fittest (10% blending)</figcaption>
         </figure>
-      </div>
-
-      <!-- <img src="../../img/lit_review/GATTCA/initial_cat1.jpg" alt="A picture of a cat, uncorrupted by a genetic agent."
-        , style="width:30%;height:30%;">
-      <img src="../../img/lit_review/GATTCA/Gen9_10%.jpg" alt="A slightly more noisy picture of a cat." ,
-        style="width:30%;height:30%;"> -->
-      <br>
+      </div> <br>
 
       <p>The organism applied 4 radial gradients, and 1 noise transformation, reducing the models confidence by a measly
         0.3906 logits values. This strategy should be an extremely effective one: Adding more shade to the center of the
