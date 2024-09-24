@@ -73,3 +73,17 @@ img.center {
 	/* To highlight code that has changed/ is dicussed */
 	background-color: #ffc;
 }
+
+.image-gallery {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-gallery figure {
+  text-align: center;
+}
+
+.image-gallery img {
+  max-width: 100%;
+  height: auto;
+}
