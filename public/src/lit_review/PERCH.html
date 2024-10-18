@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <style>
+    .image-gallery {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .image-gallery figure {
+      text-align: center;
+    }
+
+    .image-gallery img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="grey-bg">
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/lit_review/index.html">Lit Review</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav> <!-- End of navbar -->
+
+    <!-- Game design has different fonts -->
+    <div class="game-design">
+      <h3>Precise Environmental Recognition and Continuous Habitat-monitoring (PERCH)</h3>
+
+      <h3>TL;DR:</h3>
+      <p>Using two off-the-shelf models from Huggingface, I built a pipeline
+        that counted and classified the types of birds that visited my feeder in a
+        12 hour period. This demonstrates that, while these models are generally
+        robust with real world data, <mark>the more a priori knowledge a developer has</mark>
+        about the domain space to allow them to filter, modify, combine or discard
+        results, <mark>the better</mark>.</p><br>
+
+      <h3>Introduction</h3>
+      <p>I recently installed a bird feeder on my apartment's porch. I am not a bird person, I've only learned how to
+        identify a few birds for the Boyscouts years ago, and even that was only the birds local to the other side of
+        the country. I installed the bird feeder, not for myself, but for my cat. She loves to watch the birds, and I'm
+        hoping that it provides her a little entertainment and exercise while I'm away from the house. But because I'm
+        away from the house, it's hard to determine if the bird feeder plan has been successful. I could tell something
+        was showing up and eating the seeds, but I wanted to know more. </p>
+
+      <p>So I've set up an automated camera system to <mark>take a picture of the bird feeder once every 30 seconds for
+          24
+          hours.</mark> I wanted to determine:</p>
+
+      <ol>
+        <li>
+          <p>How many birds visit the feeder in 24 hours</p>
+        </li>
+        <li>
+          <p>What types of birds visited</p>
+        </li>
+        <li>
+          <p>Are there any patterns in how/ when they visit?</p>
+        </li>
+      </ol>
+      <br>
+      <p>I collected all these images on Oct 12, 2024 from 9:14am until Oct 13th 9:14am. Some sample images are shown
+        below:</p>
+
+      <div class="image-gallery">
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snapshot-00013.jpg">
+          <figcaption class="caption">Cloudy Picture of Porch</figcaption>
+        </figure>
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snapshot-00214.jpg">
+          <figcaption class="caption">Sunny Picture</figcaption>
+        </figure>
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snapshot-00314.jpg">
+          <figcaption class="caption">Picture with Birds</figcaption>
+        </figure>
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snapshot-01211.jpg">
+          <figcaption class="caption">Nighttime Picture</figcaption>
+        </figure>
+      </div> <br>
+
+      <p>Before I get into discussion about the pipeline and the particulars of the algorithms and models used, I want
+        to consider these pictures first. A few issues immediately jump out to me. Firstly, <mark>the night time images
+          are
+          effectively unusable</mark> because of how dark they are. I did not set up any consistent minimum lighting,
+        and this
+        also may cause problems with some of the day time pictures. For example, in the middle two images, notice how
+        the railings of my porch cast dark shadowed lines across the white floor. This may act as a bit of camouflage
+        for the birds, confusing or distracting the models that I use. And finally, there is some glare from the sliding
+        door that separates the camera from the outside. This is most clearly visible in the first and third pictures as
+        white horizontal streaks under and to the right of the bird feeder itself. </p>
+
+      <p>The only one of these issues that I will address is the dark images, and will manually remove them from the
+        pool of images. This left me <mark>1,460 images for analysis</mark>.
+      </p>
+      <p>
+        <mark>For the glare and poor lighting, I intentionally left those issues un-addressed as a way for me to
+          evaluate how
+          effective the publicly available computer vision models are with imperfect 'real world' data.</mark>
+      </p>
+      <br>
+
+
+      <h3>The Pipeline</h3>
+
+      <p>Using a series of models available on Huggingface, I built a small image processing and detection pipeline for
+        my personal images. First, using the <a href="https://huggingface.co/facebook/detr-resnet-50">“DETR (End-to-End
+          Object Detection) model with ResNet-50 backbone” from
+          Facebook (https://huggingface.co/facebook/detr-resnet-50)</a> I generated bounding boxes for each object in
+        the scene. Each box included a label and a confidence score.
+      </p>
+      <div class="image-gallery">
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/FullImage_AllBoxes.jpg">
+          <figcaption class="caption">All detected objects boxed</figcaption>
+        </figure>
+      </div> <br>
+
+      <p>I filtered out all low confidence detections, and all detections that were not in the class label “bird”
+        leaving only "high" confidence boxes for birds. </p>
+      <div class="image-gallery">
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/FullImage_BirdBoxes_gimp.jpg">
+          <figcaption class="caption">Only detected "high confidence" and only "birds"</figcaption>
+        </figure>
+      </div> <br>
+      <p>While the filters I added are somewhat effective, they're not perfect. Notice that one of the flowers is still
+        marked as a 'bird', one bird is boxed twice, and one bird is missed entirely. But the system was good enough to
+        detect even partial tails of birds.
+      </p>
+
+      <p>Then, I cut out each box to get a fairly clean picture of just the bird.
+      </p>
+      <div class="image-gallery">
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snapshot-00049_6.jpg">
+          <figcaption class="caption">Sparrow</figcaption>
+        </figure>
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snapshot-00049_10.jpg">
+          <figcaption class="caption">Rock Dove (Pigeon)</figcaption>
+        </figure>
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snapshot-00049_21.jpg">
+          <figcaption class="caption">Blurry Sparrow</figcaption>
+        </figure>
+      </div> <br>
+
+      <p>I didn't use the exact bounding box, instead I added some buffer on every edge of the picture. My intention was
+        to <mark>keep the target centered in the picture, but also provide some context around the potential
+          bird</mark>. Notice, that
+        each cropped picture has a different dimension, and some are quite blurry.
+      </p>
+
+      <p>Taking each of these cropped images, I then passed them into a specially trained bird species classifier. I
+        tried three different models, but the one that seemed to work the best was <a
+          href="https://huggingface.co/gungbgs/bird_species_classifier">one developed by Agung Bagus
+          (username: gungbgs)
+          https://huggingface.co/gungbgs/bird_species_classifier</a>
+      </p>
+
+      <p><mark>This classification model produced a set of 5 predicted labels</mark> and the confidence level for each
+        detected "bird" box.
+        Each of the three sample crops' predictions are shown below:
+      </p><br>
+
+      <img src="../../img/lit_review/PERCH/snapshot-00049_6.jpg">
+      <div class="" style="white-space: pre-wrap;font-family:'Lucida Console', monospace">
+        [{'label': 'HOUSE SPARROW', 'score': 0.96705162525177},
+        {'label': 'CHIPPING SPARROW', 'score': 0.9159709811210632},
+        {'label': 'BLACK-THROATED SPARROW', 'score': 0.7088210582733154},
+        {'label': 'AUSTRAL CANASTERO', 'score': 0.6963933110237122},
+        {'label': 'SMITHS LONGSPUR', 'score': 0.6690636873245239}]
+      </div>
+      <hr class="line">
+      <img src="../../img/lit_review/PERCH/snapshot-00049_10.jpg">
+      <div class="" style="white-space: pre-wrap;font-family:'Lucida Console', monospace">
+        [{'label': 'ROCK DOVE', 'score': 0.9811916947364807},
+        {'label': 'FRILL BACK PIGEON', 'score': 0.9453160762786865},
+        {'label': 'JACOBIN PIGEON', 'score': 0.9011333584785461},
+        {'label': 'GREEN WINGED DOVE', 'score': 0.807056725025177},
+        {'label': 'ZEBRA DOVE', 'score': 0.7220427989959717}]
+
+      </div>
+      <hr class="line">
+      <img src="../../img/lit_review/PERCH/snapshot-00049_21.jpg">
+      <div class="" style="white-space: pre-wrap;font-family:'Lucida Console', monospace">
+        [{'label': 'SNOWY PLOVER', 'score': 0.78097003698349},
+        {'label': 'AMERICAN PIPIT', 'score': 0.7770354151725769},
+        {'label': 'RED KNOT', 'score': 0.7687070369720459},
+        {'label': 'CRAB PLOVER', 'score': 0.7465156316757202},
+        {'label': 'ASIAN CRESTED IBIS', 'score': 0.7339437007904053}]
+      </div>
+      <hr class="line">
+
+      <p>While the results of the first two seem reasonable, the last one presents some issues. I know a priori that
+        this is a type of sparrow, but the image cas captured mid hop causing it to be blurry and appear to have extra
+        long legs. While the predicted labels are reasonable, it is still wrong. </p>
+
+      <p>I've included a picture of a Snowy Plover, Red Know and Asian Crested Ibis for comparison:
+      </p>
+      <div class="image-gallery">
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/snowyPlover.jpg">
+          <figcaption class="caption">Snowy Plover</figcaption>
+        </figure>
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/4bb9ee7e-189e-431e-a151-5cfbe314fe0e.jpg" ,
+            style="width:60%;height:80%;">
+          <figcaption class="caption">Red Know</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/ibis.jpg">
+          <figcaption class="caption">Asian Crested Ibis</figcaption>
+        </figure>
+      </div> <br>
+
+      <p><mark>I manually looked through all the bird pictures and identified only four different species of
+          birds</mark> that visited:
+      </p>
+      <p>Pigeons, Sparrows, a dove, and a male and female cardinal. </p>
+      <br>
+      <p>With this knowledge, I was able to add another filter on the species classification. If one of the 5 provided
+        predictions is for one of these 4 species, then that will be the predicted label for the cropped image.
+        <mark>Otherwise, simply “Unknown Bird” is the predicted label</mark>.
+      </p>
+
+      <pr>
+        So, unfortunately for our eager long-legged bird friend, they will be considered unknown.
+      </pr>
+      <img src="../../img/lit_review/PERCH/snapshot-00049_21.jpg">
+
+      <br><br>
+
+      <h3>Results</h3>
+      <p>After running the above pipeline on all the images collected, here are the results:</p>
+      <div class="" style="white-space: pre-wrap;font-family:'Lucida Console', monospace">
+        {
+        'HOUSE SPARROW': 1238,
+        'unknown': 838,
+        'CHIPPING SPARROW': 256,
+        'ROCK DOVE': 194,
+        'FRILL BACK PIGEON': 140,
+        'BLACK-THROATED SPARROW': 120,
+        'JACOBIN PIGEON': 125,
+        'NORTHERN CARDINAL': 80,
+        'ZEBRA DOVE': 72,
+        'MOURNING DOVE': 42,
+        'GREEN WINGED DOVE': 25,
+        'JAVA SPARROW': 2
+        }
+      </div>
+      <p>As much as I wish I had this level of diversity of birds coming to my
+        porch on an average day, I believe there is a lot of misclassification
+        happening. A more accurate mapping may be produced if we <mark>merged all the 'sparrows' and 'pigeons' together
+          into their respective groupings</mark>. While I'm not a bird expert and I can't determine which
+        of the sparrow classes are truly present, using the most common 'House
+        Sparrow” seems reasonable. Similarly, using the class “Rock Dove” for all
+        the pigeons (despite the name, the Rock Dove is what you probably imagine
+        when you imagine a pigeon). With a little amateur ornithology, I believe
+        that the three remaining Zebra, Mourning and Green Winged Doves should
+        actually be grouped together as 'Mourning Dove'. </p>
+      <br>
+      <p>The only bird that I believe that the system got correct, or 'Unidentified', is the Northern Cardinal thanks to
+        its distinctive coloring. </p>
+      <br>
+      <p>
+        Taking this a priori information into account, the new results are as follows:
+      </p>
+      <div class="" style="white-space: pre-wrap;font-family:'Lucida Console', monospace">
+        {
+        'HOUSE SPARROW': 1616,
+        'unknown': 838,
+        'ROCK DOVE': 459,
+        'NORTHERN CARDINAL': 80,
+        'MOURNING DOVE': 139,
+        }
+      </div>
+
+      <h3>Answering the Initial Questions</h3>
+      <p>Armed with these results, we can return to the original questions at the top of this post:
+      </p>
+      <h4>1: How many birds visit the feeder in 24 hours</h4>
+      <p>Overall, the system identified about <mark>3,132 birds</mark>. These are not unique birds, as some the same
+        bird is likely
+        present in multiple pictures. This, I believe, is <mark>a sizable undercount</mark> of the true number of birds.
+        While the
+        system did sometimes double count draw multiple identification boxes around the same bird (and therefore
+        inflating the total bird count), or identify a flower as a bird, it also would miss birds. My camera setup
+        also was <mark>not able to capture the full range of my porch</mark> thereby excluding many birds that came by
+        to perch just out of frame. </p>
+      <br>
+      <h4>2: What types of birds visited</h4>
+      <p>The system was least effective at answering this question. Initially, the system would claim that dozens of
+        different bird species were visiting. However, this was not true in reality. <mark>I was required to step in and
+          add
+          more filters, and make reasonable assumptions about the types of birds that visited</mark> (sparrows, doves,
+        cardinals,
+        pigeons). <mark>I did this with the understanding that many popular classification algorithms are graded on
+          their
+          rank-5 accuracy.</mark>
+      </p>
+      <p>And even then, there were a claimed 11 different species of birds visiting. I, again, stepped in and narrowed
+        that down to only 4 distinct species.
+      </p>
+      <p>Of all 3,132 birds, <mark>over 25% of them were labeled as 'unknown'</mark>, which is not an amazing statistic,
+        but also not
+        terrible. With hundreds of possible classes of birds, and the issues that come with using real world data, a 75%
+        correctness rate is quite remarkable.</p>
+      <br>
+      <h4>3: Are there any patterns in how/ when they visit? </h4>
+      <p>The 1,460 daytime pictures I have represented 43800 seconds, or just over 12 hours observations. A naive
+        average would say there are about 2 birds per picture. However, many pictures did not contain any birds at all.
+        I modified the code to also mark which frames contained a bird at all, and <mark>only 624 pictures included a
+          bird</mark>, or
+        less than 50%. Using this, we find that if a bird is present, there will be about 5 birds present. Or another
+        way to say this, <mark>birds tend to flock to the bird feeder together at the same time</mark>.</p>
+      <p>Initially, I set up the bird feeder for my cat to find entertainment while I was away. I found that the birds
+        do in fact show up, being <mark>present for 5.2 hours out of 12</mark>. </p>
+      <p>So the birds do come by, the next question is: Does
+        my cat notice or enjoy them? </p>
+      <br><br>
+      <p>That question will have to be left for a future project.</p>
+
+
+      <br class="large">
+      <br class="large">
+
+      <div class="image-gallery">
+        <figure class="item">
+          <img src="../../img/lit_review/PERCH/20241018_122902.jpg" , style="height:50%;">
+          <figcaption class="caption">My cat watching the birds</figcaption>
+        </figure>
+      </div> <br>
+
+      <br class="large">
+      <br class="large">
+
+    </div> <!-- End game design text type -->
+  </div> <!-- End of container-narrow  All stuff should be in this div-->
+
+</body>
+
+</html>
