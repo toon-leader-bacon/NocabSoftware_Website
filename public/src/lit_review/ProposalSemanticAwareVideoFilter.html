@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <style>
+    .image-gallery {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .image-gallery figure {
+      text-align: center;
+    }
+
+    .image-gallery img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="grey-bg">
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/lit_review/index.html">Lit Review</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav> <!-- End of navbar -->
+
+    <!-- Game design has different fonts -->
+    <div class="game-design">
+      <h2>Proposal: Semantic Aware Video Filter</h2>
+      <br><br>
+      <h3>1. Main Project Idea or Theme</h3>
+      <p>Semantic Aware Video Filter/ SEE – Significant Embedding Explanation</p>
+      <p>CLIP allows us to encode a picture into a dense, information rich vector. With a somewhat stable video feed,
+        like a live feed of a stationary camera, we can compute an average CLIP space embedding of a scene. Then, over
+        time, we can see how this embedding changes. Changes in clip space represent a change in semantic meaning.
+        Perhaps a bird has flown into the scene, or perhaps the weather suddenly changes. </p>
+      <br>
+      <p>Further, if we have a few examples of semantically interesting video frames, we can compare the current frame's
+        CLIP embedding to important prior clusters. This way, we can detect what exactly is happening in the vide. In
+        this way, we can differentiate specifically if a bird, squirrel, or weather change is causing the semantic
+        change. </p>
+      <br>
+      <p>Finally, as a reach goal, if the user provides a text description of what they're interested in, then that text
+        may also be encoded into CLIP space, and the Semantic Aware Video Filter can detect if the current image frame
+        is somewhat similar to the provided text description.</p>
+      <br>
+      <p>In addition to the calculating nearest clip-space neighbors of each frame in a video stream, we can attempt to
+        build a GRAD-CAM style pixel highlight. GRAD-CAM will compute a heatmap of each pixel's relevant for a given
+        class in a class-prediction model. However, I believe a similar technique may be used for computing the relevant
+        pixels for a clip space embedding. </p>
+      <br><br>
+      <h3>2. Proposed approach. </h3>
+      <p>Development will require the following steps:</p>
+      <ol>
+        <li>
+          <p>Developing code that can pull a current frame from a live stream.</p>
+        </li>
+        <li>
+          <p>Passing the frame through a CLIP vision model, to generate the image embedding.</p>
+        </li>
+        <li>
+          <p>Using the image embedding, we can compare it to:</p>
+          <ul>
+            <li>Prior long term average embedding to detect sudden semantic shifts (if something exciting has entered or
+              left the frame)</li>
+            <li>Prior well known frames, to attempt to classify exactly what is in the image</li>
+            <li>CLIP Space embedding of a text description to try and determine if the current frame is similar to a
+              user query</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p>Additionally, we can take the gradients computed by the model, and attempt to produce a GRAD-CAM style heatmap
+        of the frame.</p>
+      <br><br>
+      <h3>3. Input/Output Data</h3>
+
+      <p>I have found a few live streams on youtube that seem relevant:</p>
+
+      <ul>
+        <li>
+          <p>FL Birds Live Cam: <a
+              href="https://www.youtube.com/watch?v=8Zsc_2mGpOg">https://www.youtube.com/watch?v=8Zsc_2mGpOg</a></p>
+          <p>A stationary camera that watches a well maintained bird feeder. Some squirrels and birds make an
+            appearance, making this a good candidate for doing a nearest neighbor to determine if a frame has "nothing",
+            "squirrel" or "bird".</p>
+        </li>
+        <li>
+          <p>Night Walk in Tokyo: <a
+              href="https://www.youtube.com/watch?v=0nTO4zSEpOs">https://www.youtube.com/watch?v=0nTO4zSEpOs</a></p>
+          <p>This is a video, not a live stream, of backpack mounted camera walking through Tokyo. While the other
+            streams feature largely the same "background", this video feed features radically different views of back
+            alleys, well lit malls, down town parks, etc. There are 12 distinct locations that are visited, and it would
+            be fun to compare the average CLIP embedding of each of the 12 video segments with each other. </p>
+        </li>
+        <li>
+          <p>EVNautilus: <a href="https://www.youtube.com/@EVNautilus">https://www.youtube.com/@EVNautilus</a></p>
+          <p>An underwater research stream, outputting many frames of the sea floor, with the occasional sea creature/
+            trash/ geologic formation as the main focus for several minutes. This camera is mobile, so a tradition
+            motion detection camera would not be effective at identifying exciting frames. </p>
+        </li>
+      </ul>
+      <br><br>
+      <h3>4. Training data --- where are you going to get it</h3>
+
+      <p>I will be using pertain clip models from hugging face. Initial prototypes currently are using:
+        CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+        and
+        clip.load("ViT-B/32", device=device)
+      </p>
+      <br><br>
+      <h3>5. Evaluation plan</h3>
+
+      <p>I will determine if the semantic filters are able to successfully identify or label the content in a video. By
+        providing human labeled clips with known entities in them, I can evaluate the accuracy of the system. </p>
+      <br><br>
+      <h3>6. Impact -- if this works completely, who would care and why?</h3>
+
+      <p>This could be relevant for researchers that collect long streams of video data, to help them filter and
+        identify clips that are semantically relevant. </p>
+      <p>Further, the GRAD-CAM style heat map could help AI researchers understand how a computer vision model
+        understands images as they evolve over time. </p>
+
+      <br class="large">
+      <br class="large">
+
+    </div> <!-- End game design text type -->
+  </div> <!-- End of container-narrow  All stuff should be in this div-->
+
+</body>
+
+</html>
