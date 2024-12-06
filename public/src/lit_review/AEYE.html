@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" type="text/css" href="../../css/CustomCSS.css">
+  <link rel="stylesheet" type="text/css" href="../../css/csharpindepthCSS.css">
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/prettify.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Include Highlight.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+  <!-- Include Highlight.js JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <!-- Include Python language support -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+
+</head>
+
+<body class="grey-bg">
+  <div class="container-narrow">
+    <h1>NocabSoftware.com</h1>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+            aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#">Bootstrap theme</a> -->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="https://nocabsoftware.com/index.html">Home</a></li>
+            <li><a href="https://nocabsoftware.com/src/programming/index.html">Programming</a></li>
+            <li><a href="https://nocabsoftware.com/src/game_design/index.html">Game Design</a></li>
+            <li><a href="https://nocabsoftware.com/src/lit_review/index.html">Lit Review</a></li>
+            <li><a href="https://nocabsoftware.com/src/about/about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav> <!-- End of navbar -->
+
+    <!-- Game design has different fonts -->
+    <div class="game-design">
+      <h3>AEYE: <b>A</b>ttention <b>E</b>mbedding d<b>Y</b>namics <b>E</b>xplorer</h3>
+
+      <h3>TL;DR:</h3>
+      <p>
+        Grad Cam is a technique that allows a user to interrogate an image
+        classification model and ask “what pixels are most relevant when making
+        a classification decision?”. This technique is an effective AI
+        explainability tool, so I wanted to apply it to embedding models and ask
+        a similar question <mark>“what pixels are most semantically
+          meaningful”</mark>. Further, I wanted to apply this technique to
+        <mark>video, where prior frames may help influence or contextualize the
+          current frames</mark>.
+      </p>
+
+      <h3>What is Grad Cam</h3>
+
+      <p><a href="https://arxiv.org/abs/1610.02391">Grad Cam by Selvaraju et al.</a> published in 2019, is a paper which
+        describes a technique to produce an image mask showing what regions of an input image are relevant for a given
+        loss. From the abstract of the paper:</p>
+      <blockquote cite="https://arxiv.org/abs/1610.02391">
+        Gradient-weighted Class Activation Mapping (Grad-CAM), uses the gradients of any target concept, flowing into
+        the final convolutional layer to produce a coarse localization map highlighting important regions in the image
+        for predicting the concept.
+      </blockquote>
+
+      <p>An example of a Grad CAM image is below, which shows a picture of a bull dog, passed through ResNet40, with the
+        class label of “bull dog”.</p>
+      <img src="../../img/lit_review/AEYE/nocab_cam.jpg" style="width:80%;height:80%;"
+        alt="A bull dog with some parts of it highlighted red">
+
+      <p>To a human, it seems like the model has done a pretty good job. The eyes, ears, neck, and part of the body of
+        the dog were highlighted as important. </p>
+
+      <p>Using <a href="https://github.com/jacobgil/pytorch-grad-cam">this</a> library by github user <a
+          href="https://github.com/jacobgil">jacobgil</a> as a template, I decided to build my own Grad Cam tool. To
+        simplify, generating a Grad Cam style visualization requires passing an image through a neural network,
+        capturing the neuron activations of the last convolutional layer, then capturing the same neuron’s loss gradient
+        during a back propagation step. The convolutional layer will naturally have a width and height (it hasn’t been
+        linearized yet), so these two saved matrices can be elementwise multiplied with each other. The resulting 2D
+        matrix of values is normalized, and scaled to match the original picture, and overlaid.</p>
+
+      <p>This results in an image where pixels that were highly active in the forward pass, and were positively
+        reinforced in the backward pass are highlighted in red, while all other pixels are suppressed in blue.</p>
+
+      <h3>Grad Cam for Embedding</h3>
+      <p>The original paper applies Grad Cam to classification models. This means, during back propagation, a well
+        defined loss can be computed and back propagated through the model to capture the gradients. This will allow for
+        the gradients captured to be relevant to the specific class that was back propagated. </p>
+      <p>Jacobgil has a good example of this, which demonstrates the same image being passed in (resulting in the same
+        neuron activations during the forward pass), but different classes are used during the loss calculation and
+        backward propagation, resulting in two totally different Grad Cam visualizations. </p>
+      <img src="../../img/lit_review/AEYE/dog.jpg" alt="A picture of a cat and dog, but the dog is highlighted red">
+      <img src="../../img/lit_review/AEYE/cat.jpg" alt="A picture of a cat and dog, but the cat is highlighted red">
+
+      <p>The above two examples show the Grad Cam answering the question “What pixels are most helpful for the label
+        Dog” and “What pixels are most helpful for the label Cat”.</p>
+
+      <p>However, I want to apply Grad Cam to an embedding model, which does not have a clear label for a given frame.
+        In other words, I want to answer the question “What pixels are most semantically meaningful”. So while building
+        the Grad Cam for an embedding model was relatively easy, defining a loss function was not. </p>
+
+      <h3>Defining a Loss Function: Text Labels</h3>
+      <p>I decided to use CLIP models/ embeddings for this project for two reasons:</p>
+      <p>CLIP models are powerful, widely used, and there are several publicly available foundation models built by
+        institutions with lots of resources</p>
+      <p>CLIP models also allow text to be embedded into the same space as image embeddings. </p>
+
+      <p>The second bullet point is useful, because it allows a way for us to define a loss function which will
+        highlight arbitrary items in a scene. For example, consider this capture of a live stream of a bird feeder
+        [https://www.youtube.com/watch?v=OIqUka8BOS8]</p>
+
+      <p>Every 3 frames are embedded into CLIP Space, and compared to the CLIP embedding of the text “birds”. </p>
+      [Animated_3.gif]
+      <img src="../../img/lit_review/AEYE/_animated_3.jpg"
+        alt="Bird feeder cam with certain parts related to the term 'birds' highlighted red">
+
+      <p>The highlighted pixels are those that most strongly support the image is “birds”. Notice, the model I’m using
+        seems to really attend to the suet feeder box in the center and tends to ignore sparrows. But when a bluebird
+        and a cardinal land in the open feeder box, they tends to be the most relevant section of the image. </p>
+
+      <p>Here is another for multiple scenes of Tokyo at night highlight the label “people”</p>
+      <img src="../../img/lit_review/AEYE/_tokyo_text_people_animated.gif"
+        alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+
+      <p>Also, please forgive that the highlighting does not perfectly line up with the birds on the screen. I believe
+        part of this is because I’m only running a (relatively small) RN50 model with only 360P video quality. I believe
+        that increasing either the video quality, or the CLIP model size would produce more refined visualizations,
+        however, I only have a macbook pro laptop to work with, and I wanted to keep these results to relatively real
+        time for application to live streaming. </p>
+
+      <p>The specific loss function is shown here:</p>
+
+      <div class="code-block">
+        <pre><code class="python">def text_label_loss(self, output: torch.Tensor):
+    inputs = self.tokenizer(texts=["birds"]).to(self.device)
+    text_outputs = self.clip_model.encode_text(inputs)
+    target_class_id = 0
+    text_embedding = text_outputs[target_class_id]
+    result = torch.cosine_similarity(output.squeeze(0), text_embedding, dim=0)
+    return result
+  </code></pre>
+      </div>
+
+
+
+      <p>In plain english: I compute the embedding value of the frame, compute the embedding value for the term “birds”,
+        and use a cosine similarity between them and use that as the loss function. </p>
+
+      <p>This shows that the Grad Cam technique can be applied to a CLIP model if provided with a specific text filter.
+      </p>
+
+      <p>While this is cool, a similar result may be obtained with a more traditional masking model. However, masking
+        models require specific training data and known classes. Because I’m using a CLIP model, I can create any
+        arbitrary text filter.</p>
+
+      <h3>Defining a Loss Function: Abstract Text Labels</h3>
+
+      <p>My goal is to interrogate the model and determine “what pixels are most semantically meaningful”, or what
+        pixels have the most importance to the resulting embedding, and are relevant in the scene. So I can create a
+        text label of something more abstract like "something noteworthy", and highlight all elements in the frame that
+        are similar to "something noteworthy". </p>
+
+      <p>I can ask the model what pixels are most similar to the label "an empty scene". But this is the exact opposite
+        of what I ultimately want, so I can instead produce a negative loss function for this label. This is effectively
+        asking “what pixels discourage labeling the image as ‘an empty scene’”. More concretely, “what pixels are NOT
+        considered ‘an empty scene’”</p>
+
+      <p>Here is the positive and negative loss functions side by side:</p>
+      <div class="code-block">
+        <pre><code class="python">
+def text_label_loss(self, output: torch.Tensor):
+    inputs = self.tokenizer(texts=["something noteworthy"]).to(self.device)
+    text_outputs = self.clip_model.encode_text(inputs)
+    target_class_id = 3
+    text_embedding = text_outputs[target_class_id]
+    result = torch.cosine_similarity(output.squeeze(0), text_embedding, dim=0)
+    return result
+  </code></pre>
+      </div>
+
+      <div class="code-block">
+        <pre><code class="python">
+def text_label_loss(self, output: torch.Tensor):
+    inputs = self.tokenizer(texts=["an empty scene"]).to(self.device)
+    text_outputs = self.clip_model.encode_text(inputs)
+    target_class_id = 3
+    text_embedding = text_outputs[target_class_id]
+    result = -torch.cosine_similarity(output.squeeze(0), text_embedding, dim=0)
+    return result
+  </code></pre>
+      </div>
+
+      <p>Notice the 2nd to last results = … line is different between the two. </p>
+
+      <p>Here are some examples and the labels used, along with the positive or negative loss result. </p>
+
+      <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_text_something_noteworthy_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">“something noteworthy” (positive loss)</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_text_empty_scene_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">“an empty scene” (negative loss)</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_text_background_clutter_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">“background clutter” (negative loss)</figcaption>
+        </figure>
+      </div>
+      <br><br>
+      <p>While these results are reasonable, it’s not clear what is the best label to use. Additionally, each frame is
+        considered in isolation, with no context or reference from prior frames. It would be best if we could use prior
+        frames to help contextualize the understanding of the current frame. Further, this can only be applied to CLIP
+        models which also map text to the same space as images. However, there are many high quality image embedding
+        models which only operate on images, so these text filter loss functions will not work.</p>
+
+      <h3>Defining a Loss Function: Compared to Prior Average</h3>
+
+      <p>To leverage prior frames, there are two main techniques I considered. In both cases, I computed an average
+        embedding vector of the prior N frames. For one loss function, I compared this average embedding to the specific
+        embedding of the current frame, and for the other loss function I computed the delta between the average and
+        current embeddings. </p>
+
+      <h2>Similarity to Average</h2>
+      <p>The loss function for the first case (comparing the current frame’s embedding to the average embedding) is
+        shown below. </p>
+
+      <div class="code-block">
+        <pre><code class="python">
+def recent_average_loss(self, output: torch.Tensor):
+    result = -torch.cosine_similarity(
+                 output.squeeze(0),
+                 self.recent_image_embeddings.average_as_tensor(),
+                 dim=0)
+    return result
+  </code></pre>
+      </div>
+
+      <p>I ran 3 different experiments, each with an increasing window of frames used to compute the average:</p>
+
+      <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_average_loss_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">10 prior frames:</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_average_loss_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">100 prior frames:</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_average_loss_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+
+          <figcaption class="caption">500 prior frames:</figcaption>
+        </figure>
+      </div>
+      <br><br>
+
+      <p>Intuitively, the above loss functions can be understood as asking the model “What regions of the current frame
+        are most semantically different to the prior 0.3, 3 or 15 seconds of video?”</p>
+
+      <h2>Delta to Average</h2>
+      <p>The second loss function used the delta between the average and the current frame. In order for this to work
+        properly, I needed to normalize this delta.</p>
+      <div class="code-block">
+        <pre><code class="python">
+def recent_average_delta_loss(self, output: torch.Tensor):
+    delta = self.recent_image_embeddings.average_as_tensor() - output
+    result = delta.norm()
+    return result
+   </code></pre>
+      </div>
+
+      <p>Again, the same window was used to produce 3 different results</p>
+
+      <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_delta_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">10 prior frames:</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_delta_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">100 prior frames:</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_delta_animated.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+
+          <figcaption class="caption">500 prior frames:</figcaption>
+        </figure>
+      </div>
+      <br><br>
+
+      <p>With this second style of loss function, we are asking the model “what regions of the image are driving the
+        most semantic difference compared to the prior 0.3, 3 or 15 seconds of video?”</p>
+
+      <br class="large">
+      <br class="large">
+    </div> <!-- End game design text type -->
+  </div> <!-- End of container-narrow  All stuff should be in this div-->
+
+  <script>
+    // Initialize syntax highlighting
+    hljs.highlightAll();
+  </script>
+</body>
+
+</html>
