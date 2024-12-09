@@ -50,7 +50,7 @@
 
     <!-- Game design has different fonts -->
     <div class="game-design">
-      <h3>AEYE: <b>A</b>ttention <b>E</b>mbedding d<b>Y</b>namics <b>E</b>xplorer</h3>
+      <h3>A-EYE: <b>A</b>ttention <b>E</b>mbedding d<b>Y</b>namics <b>E</b>xplorer</h3>
 
       <h3>TL;DR:</h3>
       <p>
@@ -63,6 +63,72 @@
         <mark>video, where prior frames may help influence or contextualize the
           current frames</mark>.
       </p>
+      <br>
+      <p>To play the gifs at the same time, please wait for the gifs to load (and cache) then refresh the page.</p>
+      <br>
+
+      <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_text_something_noteworthy_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Text Loss (+): “something noteworthy”</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_text_empty_scene_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Text Loss (-): “an empty scene”</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_text_background_clutter_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Text Loss (-): “background clutter”</figcaption>
+        </figure>
+      </div>
+      <br>
+
+      <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_average_loss_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Similar to prior 10 frames</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_average_loss_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Similar to prior 100 frames</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_average_loss_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+
+          <figcaption class="caption">Similar to prior 500 frames</figcaption>
+        </figure>
+      </div>
+      <br>
+      <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_delta_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Delta of prior 10 frames</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_delta_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Delta of prior 100 frames</figcaption>
+        </figure>
+
+        <figure class="item">
+          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_delta_animated.opti.gif"
+            alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
+          <figcaption class="caption">Delta of prior 500 frames</figcaption>
+        </figure>
+      </div>
+      <br><br>
 
       <h3>What is Grad Cam</h3>
 
@@ -122,7 +188,7 @@
         [https://www.youtube.com/watch?v=OIqUka8BOS8]</p>
 
       <p>Every 3 frames are embedded into CLIP Space, and compared to the CLIP embedding of the text “birds”. </p>
-      [Animated_3.gif]
+      [Animated_3.opti.gif]
       <img src="../../img/lit_review/AEYE/_animated_3.jpg"
         alt="Bird feeder cam with certain parts related to the term 'birds' highlighted red">
 
@@ -131,7 +197,7 @@
         and a cardinal land in the open feeder box, they tends to be the most relevant section of the image. </p>
 
       <p>Here is another for multiple scenes of Tokyo at night highlight the label “people”</p>
-      <img src="../../img/lit_review/AEYE/_tokyo_text_people_animated.gif"
+      <img src="../../img/lit_review/AEYE/_tokyo_text_people_animated.opti.gif"
         alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
 
       <p>Also, please forgive that the highlighting does not perfectly line up with the birds on the screen. I believe
@@ -183,7 +249,7 @@
 def text_label_loss(self, output: torch.Tensor):
     inputs = self.tokenizer(texts=["something noteworthy"]).to(self.device)
     text_outputs = self.clip_model.encode_text(inputs)
-    target_class_id = 3
+    target_class_id = 0
     text_embedding = text_outputs[target_class_id]
     result = torch.cosine_similarity(output.squeeze(0), text_embedding, dim=0)
     return result
@@ -195,7 +261,7 @@ def text_label_loss(self, output: torch.Tensor):
 def text_label_loss(self, output: torch.Tensor):
     inputs = self.tokenizer(texts=["an empty scene"]).to(self.device)
     text_outputs = self.clip_model.encode_text(inputs)
-    target_class_id = 3
+    target_class_id = 0
     text_embedding = text_outputs[target_class_id]
     result = -torch.cosine_similarity(output.squeeze(0), text_embedding, dim=0)
     return result
@@ -208,19 +274,19 @@ def text_label_loss(self, output: torch.Tensor):
 
       <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_text_something_noteworthy_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_text_something_noteworthy_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
           <figcaption class="caption">“something noteworthy” (positive loss)</figcaption>
         </figure>
 
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_text_empty_scene_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_text_empty_scene_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
           <figcaption class="caption">“an empty scene” (negative loss)</figcaption>
         </figure>
 
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_text_background_clutter_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_text_background_clutter_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
           <figcaption class="caption">“background clutter” (negative loss)</figcaption>
         </figure>
@@ -258,19 +324,19 @@ def recent_average_loss(self, output: torch.Tensor):
 
       <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_average_loss_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_average_loss_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
           <figcaption class="caption">10 prior frames:</figcaption>
         </figure>
 
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_average_loss_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_average_loss_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
           <figcaption class="caption">100 prior frames:</figcaption>
         </figure>
 
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_average_loss_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_average_loss_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
 
           <figcaption class="caption">500 prior frames:</figcaption>
@@ -297,19 +363,19 @@ def recent_average_delta_loss(self, output: torch.Tensor):
 
       <div class="image-gallery" style="width: 1300px; margin: 0 -250px;">
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_delta_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_10_recent_delta_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
           <figcaption class="caption">10 prior frames:</figcaption>
         </figure>
 
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_delta_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_100_recent_delta_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
           <figcaption class="caption">100 prior frames:</figcaption>
         </figure>
 
         <figure class="item">
-          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_delta_animated.gif"
+          <img src="../../img/lit_review/AEYE/_tokyo_500_recent_delta_animated.opti.gif"
             alt="A few scenes of Tokyo at night, wight various parts of the frames highlighted in red">
 
           <figcaption class="caption">500 prior frames:</figcaption>
@@ -319,6 +385,55 @@ def recent_average_delta_loss(self, output: torch.Tensor):
 
       <p>With this second style of loss function, we are asking the model “what regions of the image are driving the
         most semantic difference compared to the prior 0.3, 3 or 15 seconds of video?”</p>
+
+      <p>With this second style of loss function, we are asking the model “what regions of the image are driving the
+        most semantic difference compared to the prior 0.3, 3 or 15 seconds of video?”</p>
+
+      <h3>Conclusions and Observations:</h3>
+      <p>Grad Cam is most effective when you have a well defined loss function, like that typically found in
+        classification tasks. However, the technique still works for embedding models, but requires some creativity when
+        defining the loss function. </p>
+
+      <p>For the model I was using, and across the different loss functions I defined, I noticed that text (like that
+        found on the floor, signs, or the video UI) typically drew the attention of the model. People were also
+        consistently draw. </p>
+
+      <p>The performance requirements of Grad Cam are not too extreme. However, I did have to make some sacrifices in
+        order for near real time computation and rendering. First, all videos were only 360p. Higher quality video does
+        cause each Grad Cam to take longer to compute. Secondly, I am only using a (relativly) small CLIP embedding
+        model <a href=”https://github.com/mlfoundations/open_clip”>Open clip RN50x16</a>. If I used a larger model like
+        <a href=”https://huggingface.co/openai/clip-vit-large-patch14”>OpenAi CLIP vit Largex14</a> I would get more
+        fine results, less blurry blobs. But the trade off is I would no longer be able to run this at near real time.
+      </p>
+
+      <p>Currently, the text loss function runs at about 2 frames per second, while the comparative loss runs at about
+        15 frames per second. While not quite up to a minimum standard of 24fps, this is reasonably good results for the
+        performance on a macbook pro laptop with unoptimized python code. </p>
+
+      <h3>Future Work and Impact:</h3>
+
+      <p>Each of the above visualizations considers a single loss function back propagation, but theoretically multiple
+        losses can be calculated to produce multiple visualizations which can then be averaged, maxed, or threholded
+        together to produce better results. For example, we can take the short, medium and long term average loss
+        comparisons and see what parts of the image they all agree are semantically different (or semantically similar).
+      </p>
+
+      <p>Additionally, we can consider multiple different text filters. Suppose we want to highlight all the birds and
+        squirrels instead of just one or the other. </p>
+
+
+      <p>However, we must be careful when improving the visualization. This tool is ultimately an AI explainability
+        tool, an “eye-tracker” for a convolutional model. By tinkering and adjusting the loss function to produce a
+        result that matches with our (human) instinct, then we may inadvertently removing the value of these kinds of
+        tools. <a href=”https://arxiv.org/abs/1707.08945”>Suppose a vision model receives a picture of a Stop sign, but
+          ‘thinks’ that it’s actually a Speed Limit 45 sign</a>. Researchers will want to know answers to the question
+        “What in the image is most relevant to the output?”, this A-EYE tool helps identify times when an AI model
+        attends to parts of an image that a human would not expect. </p>
+
+      <p>There will always be more questions, like “why does that region of the image impact output”, or “how
+        specifically does this patch influence the embedding, vector in CLIP space does this image patch represent?” But
+        identifying which patches are most semantically relevant for creating an embedding vector is the first step.</p>
+
 
       <br class="large">
       <br class="large">
