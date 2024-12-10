@@ -52,6 +52,9 @@
     <div class="game-design">
 
       <h3>Particle Filters</h3>
+      <p>Relevant code may be found in the git repo <a
+          href="https://github.com/toon-leader-bacon/RadarTargetDetection">here</a>.</p>
+
       <br><br>
 
       <h3>Radar Background and Problem Motivation</h3>
@@ -237,10 +240,12 @@
           the entire model from timesteps 20 through 99 (so as to exclude the particle filter initialization steps) we
           get the following average results for each model:</p>
 
+        <br><br>
         <p>Moving Target w/ Likelihood Surface: 9.72 deg</p>
         <p>Moving Target w/ Probability Surface: 10.87 deg</p>
         <p>Static Target w/ Likelihood Surface: 8.46 deg</p>
         <p>Static Target w/ Probability Surface: 10.11 deg</p>
+        <br><br>
 
         <p>I've done some prior work on this target localization problem, so I'll provide past results to
           contextualize these numbers. </p>
@@ -250,7 +255,8 @@
             network</mark> to attempt to solve this problem, and in the cluttered scenario it produced and
           <mark>abysmal +/- 45 degrees bearing-to-target error</mark> in the cluttered scenario.
         </p>
-
+        <br>
+        <h3>Conclusion</h3>
         <p>So in conclusion, <mark>the particle filter does provide an improvement on the state of the art for
             identifying the bearing-to-target in a mono-receiver, multistatic, passive radar regime</mark>.</p>
 
