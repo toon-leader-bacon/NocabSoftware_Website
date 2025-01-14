@@ -5,6 +5,25 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "redirects": [
+      {
+        "source": "/src/lit_review/GATTCA.html",
+        "destination": "/src/projects/GATTCA.html",
+        "type": 301
+      },
+
+      {
+        "source": "/src/lit_review/PERCH.html",
+        "destination": "/src/projects/PERCH.html",
+        "type": 301
+      },
+
+      {
+        "source": "/src/lit_review/AEYE.html",
+        "destination": "/src/projects/AEYE.html",
+        "type": 301
+      }
     ]
   }
 }
