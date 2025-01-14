@@ -8,7 +8,7 @@
     ],
     "redirects": [
       {
-        "source": "/src/lit_review/GATTCA.html",
+        "source": "src/lit_review/GATTCA.html",
         "destination": "/src/projects/GATTCA.html",
         "type": 301
       },
