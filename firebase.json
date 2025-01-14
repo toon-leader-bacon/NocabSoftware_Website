@@ -14,13 +14,13 @@
       },
 
       {
-        "source": "/src/lit_review/PERCH.html",
+        "source": "src/lit_review/PERCH.html",
         "destination": "/src/projects/PERCH.html",
         "type": 301
       },
 
       {
-        "source": "/src/lit_review/AEYE.html",
+        "source": "src/lit_review/AEYE.html",
         "destination": "/src/projects/AEYE.html",
         "type": 301
       }
